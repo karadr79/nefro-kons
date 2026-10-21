@@ -1,4 +1,4 @@
-NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.2.1
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.2.2
 RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
 
 KLASÖRDEKİ DOSYALAR
@@ -35,3 +35,8 @@ D. KULLANIM KURALLARI
   - Uygulama form verisini saklamaz. iPhone'da uygulama uzun süre arka planda kalırsa yeniden açılabilir ve girilen
     veriler silinir; notu HBYS'ye aktarmadan başka işe geçmeyin.
   - Bu klasörde hasta verisi yoktur; depo herkese açık olabilir.
+
+E. NEFRO ARAÇLAR
+  Başlıktaki "Hesap araçları" düğmesi https://karadr79.github.io/NefroHesapAraclar/ uygulamasını açar.
+  Formdaki yaş, cinsiyet, kilo ve kreatinin değerleri bağlantının # kısmıyla aktarılır (sunucuya gönderilmez);
+  Nefro Araçlar bu değerleri hasta şeridine yazar ve adresten siler.

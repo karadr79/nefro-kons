@@ -158,8 +158,8 @@ button.wsbtn{background:var(--green-soft);border-color:var(--green-line);color:v
 .grp.mod{border-left:4px solid var(--blue);background:color-mix(in srgb,var(--blue-soft) 45%,transparent)}
 .grp.mod h3{color:var(--blue);font-size:14px}
 .grp.mod>.card-ref{margin:-4px 0 10px}
-button.kref{font:inherit;font-size:12.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-soft);border-radius:4px;padding:2px 8px;cursor:pointer}
-button.kref:hover{border-color:var(--accent)}
+button.kref,a.kref{font:inherit;font-size:12.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-soft);border-radius:4px;padding:2px 8px;cursor:pointer}
+button.kref:hover,a.kref:hover{border-color:var(--accent)}
 .kv{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column}
 .kv-h{display:flex;gap:8px;align-items:center;background:var(--sheet);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
 .kv-h .t{font-weight:800;font-size:16px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -222,8 +222,8 @@ html{scroll-behavior:smooth}
   <header class="top">
     <div class="org" id="org"></div>
     <h1 id="ttl"></h1>
-    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.2.1</span></div>
-    <div><button type="button" class="kref" id="btnBook" style="font-size:13.5px;padding:6px 12px">El kitabını aç</button></div>
+    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.2.2</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="kref" id="btnBook" style="font-size:13.5px;padding:6px 12px">El kitabını aç</button><a class="kref" id="btnCalc" href="https://karadr79.github.io/NefroHesapAraclar/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Hesap araçları ↗</a></div>
     <div class="install" id="installHint" hidden>
   <span id="installText"></span>
   <button type="button" class="ghost" id="installClose" aria-label="Kapat">Kapat</button>
@@ -698,6 +698,14 @@ async function kvCard(id){
   KV.querySelector('#kvIn').onclick=e=>{ const j=e.target.closest('[data-jump]'); if(j){ const h=document.getElementById(j.dataset.jump); if(h) b.scrollTop=h.offsetTop-8; return; }
     const f=e.target.closest('figure'); if(f) f.classList.toggle('z'); };
 }
+// Nefro Araçlar'a geçiş: yaş, cinsiyet, kilo ve kreatinin URL parçası (#) ile aktarılır; sunucuya gönderilmez
+document.getElementById('btnCalc').addEventListener('click',()=>{
+  const g=id=>{ const r=form.querySelector(`input[name="${id}"]:checked`); if(r) return r.value; const el=document.getElementById(id); return el?String(el.value||'').trim():''; };
+  const n=id=>{ const v=g(id).replace(/\s/g,'').replace(',','.'); return /^\d*\.?\d+$/.test(v)?v:''; };
+  const c=g('cins'), p={yas:n('yas'),cins:c==='Kadın'?'K':c==='Erkek'?'E':'',kilo:n('kilo')||n('kuruagirlik'),kr:n('l_cr')||n('cr_simdi')};
+  const q=Object.keys(p).filter(k=>p[k]).map(k=>k+'='+p[k]).join(';');
+  document.getElementById('btnCalc').href='https://karadr79.github.io/NefroHesapAraclar/'+(q?'#hasta:'+q:'');
+});
 document.addEventListener('click',e=>{ const k=e.target.closest('button.kref[data-card]'); if(k){ e.preventDefault(); kvCard(k.dataset.card); return; }
   const bk=e.target.closest('#btnBook,[data-book]'); if(bk){ e.preventDefault(); kvIndex(); } });
 // ---- modül özeti (HBYS ve WhatsApp için)
