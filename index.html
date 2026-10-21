@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1F4E79">
+<meta name="description" content="RTEÜ Nefroloji konsültasyon formu: kırmızı bayrak taraması, hesaplayıcılar, HBYS notu ve WhatsApp özeti.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Nefro Kons">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+body{margin:0} img{max-width:100%} [hidden]{display:none!important}
+.install{background:var(--green-soft);border:1px solid var(--green-line);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:13.5px;display:flex;gap:10px;align-items:flex-start;margin-top:10px}
+.install b{color:var(--green)} .install button{margin-left:auto;padding:4px 10px;font-size:13px}
+.appver{font-family:var(--f-mono);font-size:12px;color:var(--ink-3)}
+</style>
+<title>Nefroloji Konsültasyon Formu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;700;800&family=Atkinson+Hyperlegible+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: clinical chart sheet — left section rail (wide screens), single form column, sticky action bar; red/blue/green bands mark triage, assessment, plan */
+:root{
+  --bg:#F3F5F8; --sheet:#FFFFFF; --ink:#16212E; --ink-2:#4A5767; --ink-3:#6F7C8B;
+  --line:#D6DCE4; --line-2:#E7EBF0; --field:#FBFCFD;
+  --accent:#1F4E79; --accent-soft:#E3ECF5;
+  --red:#B42318; --red-soft:#FDECEA; --red-line:#F2B8B2;
+  --blue:#1F4E79; --blue-soft:#EAF1F8; --green:#1E6B48; --green-soft:#E7F4EC; --green-line:#B6DCC6;
+  --amber:#8A5A00; --amber-soft:#FFF4DC;
+  --chip:#EEF2F6; --chip-on:#1F4E79; --chip-on-ink:#FFFFFF;
+  --f-body:"Atkinson Hyperlegible Next",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Atkinson Hyperlegible Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F151C; --sheet:#151D27; --ink:#E6ECF2; --ink-2:#AEB9C6; --ink-3:#8593A3;
+  --line:#2A3746; --line-2:#212C38; --field:#111922;
+  --accent:#8DB8E4; --accent-soft:#1B2B3C;
+  --red:#FF8A7E; --red-soft:#33191A; --red-line:#6A2A27;
+  --blue:#8DB8E4; --blue-soft:#172535; --green:#7FD1A6; --green-soft:#132A20; --green-line:#285040;
+  --amber:#F2C46B; --amber-soft:#2E2412;
+  --chip:#1E2935; --chip-on:#8DB8E4; --chip-on-ink:#0F151C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F151C; --sheet:#151D27; --ink:#E6ECF2; --ink-2:#AEB9C6; --ink-3:#8593A3;
+  --line:#2A3746; --line-2:#212C38; --field:#111922;
+  --accent:#8DB8E4; --accent-soft:#1B2B3C;
+  --red:#FF8A7E; --red-soft:#33191A; --red-line:#6A2A27;
+  --blue:#8DB8E4; --blue-soft:#172535; --green:#7FD1A6; --green-soft:#132A20; --green-line:#285040;
+  --amber:#F2C46B; --amber-soft:#2E2412;
+  --chip:#1E2935; --chip-on:#8DB8E4; --chip-on-ink:#0F151C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--sheet)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 96px}
+header.top{padding-block:28px 18px;display:grid;gap:6px}
+.org{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+h1{font-size:clamp(24px,4vw,32px);line-height:1.15;margin:0;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
+.ver{font-size:13px;color:var(--ink-3)}
+.privacy{display:flex;gap:10px;align-items:flex-start;background:var(--accent-soft);color:var(--ink);border-radius:var(--r);padding:10px 14px;font-size:13.5px;margin-top:10px}
+.privacy b{color:var(--accent)}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;align-items:start}
+nav.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);display:grid;gap:2px;font-size:13.5px}
+nav.rail a{display:grid;grid-template-columns:26px 1fr 10px;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;color:var(--ink-2);text-decoration:none}
+nav.rail a:hover{background:var(--chip);color:var(--ink)}
+nav.rail .n{font-family:var(--f-mono);font-size:12px;color:var(--ink-3)}
+nav.rail .dot{width:8px;height:8px;border-radius:50%;background:var(--line)}
+nav.rail .dot.part{background:var(--amber)} nav.rail .dot.done{background:var(--green)} nav.rail .dot.alert{background:var(--red)}
+.alertbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));background:var(--red);color:#fff;font-weight:700;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+:root[data-theme="dark"] .alertbar{color:#1b0b0a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .alertbar{color:#1b0b0a}}
+.alertbar span.list{font-weight:500;font-size:13.5px}
+.use{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px;margin-bottom:18px}
+.use h2{font-size:14px;margin:0 0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
+.use ol{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px;color:var(--ink-2)}
+section.sec{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);margin-bottom:18px;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 64px)}
+.sec-h{display:flex;gap:12px;align-items:baseline;padding:14px 18px;border-bottom:1px solid var(--line-2)}
+.sec-h .num{font-family:var(--f-mono);font-weight:600;font-size:14px;color:var(--ink-3);min-width:22px}
+.sec-h h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.005em}
+.sec.red{border-color:var(--red-line)} .sec.red .sec-h{background:var(--red-soft);border-color:var(--red-line)} .sec.red .sec-h h2,.sec.red .sec-h .num{color:var(--red)}
+.sec.blue .sec-h{background:var(--blue-soft)} .sec.blue .sec-h h2{color:var(--blue)}
+.sec.green{border-color:var(--green-line)} .sec.green .sec-h{background:var(--green-soft);border-color:var(--green-line)} .sec.green .sec-h h2{color:var(--green)}
+.lead{padding:12px 18px 0;font-weight:600;color:var(--ink);max-width:75ch}
+.sec.red .lead{color:var(--red)}
+.grp{padding:14px 18px;border-top:1px dashed var(--line-2)}
+.grp:first-of-type{border-top:0}
+.grp h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);font-weight:700}
+.fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px 16px}
+.f{display:grid;gap:4px;min-width:0}
+.f.wide{grid-column:1/-1}
+.f label.l{font-size:13.5px;font-weight:700;color:var(--ink-2)}
+.req::after{content:" *";color:var(--red)}
+input[type=text],input[type=number],select,textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-height:40px}
+textarea{min-height:76px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible,.chip:has(input:focus-visible),.ck:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:1px}
+.unit{display:flex;align-items:stretch}
+.unit input{border-top-right-radius:0;border-bottom-right-radius:0;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.unit input.bad{border-color:var(--red);background:var(--red-soft)}
+.unit span{display:flex;align-items:center;padding:0 9px;border:1px solid var(--line);border-left:0;border-radius:0 6px 6px 0;background:var(--chip);font-size:12.5px;color:var(--ink-3);white-space:nowrap}
+.hint{font-size:12.5px;color:var(--ink-3);line-height:1.45}
+.card-ref{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--accent)}
+.card-ref b{font-weight:700}
+.card-ref i{font-style:normal;border:1px solid var(--accent-soft);background:var(--accent-soft);border-radius:4px;padding:1px 7px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{position:relative;display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--chip);border-radius:999px;padding:6px 12px;font-size:13.5px;cursor:pointer;user-select:none;color:var(--ink)}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip:has(input:checked){background:var(--chip-on);border-color:var(--chip-on);color:var(--chip-on-ink)}
+.ck{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:10px 12px;border:1px solid var(--line-2);border-radius:6px;cursor:pointer;background:var(--field)}
+.ck input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent)}
+.ck .t{font-weight:700;font-size:14.5px}
+.ck.rf input{accent-color:var(--red)}
+.ck.rf:has(input:checked){border-color:var(--red);background:var(--red-soft)}
+.ck.rf:has(input:checked) .t{color:var(--red)}
+.ck .sub{display:grid;gap:4px;margin-top:3px}
+.note{grid-column:1/-1;font-size:13.5px;color:var(--ink-2);background:var(--amber-soft);border-radius:6px;padding:9px 12px;display:grid;gap:6px;max-width:100%}
+.note::before{content:"Kılavuz notu";font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:var(--amber)}
+.rfsum{grid-column:1/-1;border-radius:6px;padding:12px 14px;font-weight:700;display:grid;gap:8px}
+.rfsum.on{background:var(--red);color:#fff}
+:root[data-theme="dark"] .rfsum.on{color:#1b0b0a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rfsum.on{color:#1b0b0a}}
+.rfsum.off{background:var(--field);border:1px solid var(--line)}
+.calc{grid-column:1/-1;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.calc table{width:100%;border-collapse:collapse;font-size:14px}
+.calc th,.calc td{text-align:left;padding:8px 12px;border-top:1px solid var(--line-2);vertical-align:top}
+.calc tr:first-child th,.calc tr:first-child td{border-top:0}
+.calc th{font-weight:700;color:var(--ink-2);width:38%}
+.calc td .v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.calc td .i{color:var(--ink-3);font-size:12.5px;display:block}
+.calc .stage{display:inline-block;border-radius:4px;padding:1px 8px;font-weight:800;font-family:var(--f-mono)}
+.calc .s0{background:var(--chip)} .calc .s1{background:var(--amber-soft);color:var(--amber)} .calc .s2,.calc .s3{background:var(--red-soft);color:var(--red)}
+.dx{grid-column:1/-1;display:grid;grid-template-columns:28px minmax(0,2fr) 130px minmax(0,2fr);gap:8px;align-items:center}
+.dx .dn{font-family:var(--f-mono);font-weight:700;color:var(--blue)}
+.errors{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px;margin-bottom:18px}
+.errors h2,.refs h2,.out h2{font-size:17px;margin:0 0 8px}
+.errors ul{margin:0;padding-left:20px;display:grid;gap:3px;font-size:14px;color:var(--ink-2)}
+.refs{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px;margin-bottom:18px}
+.refs ol{margin:0;padding-left:22px;display:grid;gap:5px;font-size:12.5px;color:var(--ink-2);overflow-wrap:anywhere}
+.out{background:var(--sheet);border:2px solid var(--accent);border-radius:var(--r);padding:14px 18px;margin-bottom:18px;scroll-margin-top:80px}
+.out textarea{font-family:var(--f-mono);font-size:13px;min-height:340px;line-height:1.5}
+.missing{background:var(--red-soft);color:var(--red);border-radius:6px;padding:10px 12px;font-size:13.5px;margin-bottom:10px}
+.missing a{color:inherit}
+.actions{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--sheet);border-top:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.actions .in{max-width:1180px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.actions .prog{font-size:13px;color:var(--ink-3);margin-right:auto;font-variant-numeric:tabular-nums}
+button{font:inherit;font-size:14px;font-weight:700;border-radius:6px;padding:9px 14px;cursor:pointer;border:1px solid var(--line);background:var(--chip);color:var(--ink)}
+button.pri{background:var(--accent);border-color:var(--accent);color:var(--sheet)}
+button.ghost{background:transparent}
+button.danger{color:var(--red)}
+.confirm{display:inline-flex;gap:6px;align-items:center;font-size:13px}
+.out.ws{border-color:var(--green)} .out.ws h2{color:var(--green)}
+button.wsbtn{background:var(--green-soft);border-color:var(--green-line);color:var(--green)}
+.actions .sm{display:none}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--sheet);padding:8px 14px;border-radius:6px;font-size:13.5px;z-index:40}
+.sample-flag{background:var(--amber-soft);color:var(--amber);font-weight:700;border-radius:6px;padding:8px 12px;font-size:13.5px;margin-bottom:12px}
+@media (max-width:900px){.layout{grid-template-columns:minmax(0,1fr)} nav.rail{display:none}}
+@media (max-width:560px){.dx{grid-template-columns:24px minmax(0,1fr)} .dx>*:nth-child(n+3){grid-column:2} .sec-h,.grp,.lead{padding-left:14px;padding-right:14px} .fields{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){
+  .actions .in{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .actions .prog{display:none}
+  .actions button{padding:9px 4px;font-size:13px;width:100%}
+  #clearWrap{display:contents}
+  .actions .confirm{grid-column:1/-1;justify-content:center}
+  .actions .lg{display:none} .actions .sm{display:inline}
+  .toast{bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <div class="alertbar" id="alertbar" hidden>
+    <span>KIRMIZI BAYRAK · Sorumlu uzmanı hemen arayın</span><span class="list" id="alertlist"></span>
+  </div>
+  <header class="top">
+    <div class="org" id="org"></div>
+    <h1 id="ttl"></h1>
+    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.1.0</span></div>
+    <div class="install" id="installHint" hidden>
+  <span id="installText"></span>
+  <button type="button" class="ghost" id="installClose" aria-label="Kapat">Kapat</button>
+</div>
+    <div class="privacy"><span><b>Veri saklanmaz.</b> Girilen bilgiler yalnızca bu sekmede tutulur, hiçbir yere gönderilmez; sayfa kapanınca ya da yenilenince silinir. Kayıt için oluşturulan notu HBYS'ye aktarın. Hasta adı yazmayın.</span></div>
+  </header>
+  <div class="layout">
+    <nav class="rail" id="rail" aria-label="Bölümler"></nav>
+    <main id="main">
+      <div class="sample-flag" id="sampleflag" hidden>ÖRNEK HASTA — Bu veriler gösterim amaçlıdır. Gerçek konsültasyondan önce "Formu temizle" ile silin.</div>
+      <div class="use"><h2>Kullanım</h2><ol id="use"></ol><button type="button" class="ghost" id="btnSample" style="margin-top:10px">Örnek hastayla doldur (eğitim)</button></div>
+      <form id="form" autocomplete="off" novalidate></form>
+      <div class="out" id="out">
+        <h2>HBYS konsültasyon notu</h2>
+        <div id="missing"></div>
+        <textarea id="note" readonly aria-label="Konsültasyon notu" placeholder="Formu doldurduktan sonra alttaki 'Notu oluştur' düğmesine basın."></textarea>
+      </div>
+      <div class="out ws" id="wsout">
+        <h2>WhatsApp özeti (uzmana)</h2>
+        <p class="hint" style="margin:0 0 8px">Grupta veya uzmana bireysel mesajla gönderilecek kısa özet. Hasta adı içermez; protokol numarası varsayılan olarak eklenmez. Yalnızca konsültasyonu sürdürmek için gereken bilgiyi paylaşın; ayrıntılı kayıt HBYS'dedir.</p>
+        <label class="ck" style="margin-bottom:8px"><input type="checkbox" id="ws_prot"><span><span class="t">Özete protokol numarasını ekle</span><span class="sub"><span class="hint">Uzmanın hastayı HBYS'de bulması gerekiyorsa işaretleyin.</span></span></span></label>
+        <textarea id="wsnote" readonly aria-label="WhatsApp özeti" style="min-height:220px" placeholder="Alttaki 'WhatsApp özeti' düğmesine basın."></textarea>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center">
+          <button type="button" id="btnWsCopy" class="pri">Özeti kopyala</button>
+          <a id="wsLink" href="https://wa.me/" target="_blank" rel="noopener" style="font-weight:700;color:var(--green)">WhatsApp'ta aç (sohbeti seçin)</a>
+        </div>
+      </div>
+      <div class="errors"><h2>Sık yapılan hatalar</h2><ul id="errors"></ul></div>
+      <div class="refs"><h2>Kaynaklar</h2><ol id="refs"></ol></div>
+    </main>
+  </div>
+</div>
+<div class="actions"><div class="in">
+  <span class="prog" id="prog"></span>
+  <span id="clearWrap"><button type="button" class="ghost danger" id="btnClear"><span class="lg">Formu temizle</span><span class="sm">Temizle</span></button></span>
+  <button type="button" id="btnBuild" class="pri">Not<span class="lg">u</span> oluştur</button>
+  <button type="button" id="btnCopy"><span class="lg">Notu kopyala</span><span class="sm">Kopyala</span></button>
+  <button type="button" id="btnWs" class="wsbtn">WhatsApp<span class="lg"> özeti</span></button>
+</div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const C = {"title": "Nefroloji Konsültasyon Formu", "org": "RTEÜ Tıp Fakültesi · İç Hastalıkları AD · Nefroloji Bilim Dalı", "version": "Sürüm 1.1 · Ekim 2026", "use": ["Formu yukarıdan aşağıya doldurun. Bölüm 1 (Kırmızı bayrak) hasta başında, öykü ve muayeneden önce tamamlanır.", "Kırmızı bayraklardan herhangi biri işaretlenirse formu beklemeden sorumlu uzmanı arayın; ilk müdahaleyi eşzamanlı başlatın.", "Kılavuz notları eşik değerleri hatırlatır; klinik değerlendirmenin yerini almaz. Ayrıntılar için ilgili el kitabı kartına bakın.", "Formda hasta adı yazılmaz; protokol numarası kullanılır. Konsültasyon notu HBYS'ye aktarılarak kayda geçer.", "Uzmana WhatsApp'tan bilgi verirken 'WhatsApp özeti' düğmesini kullanın; özet hasta adı ve protokol numarası içermez."], "sections": [{"id": "s0", "n": "0", "title": "Danışan birim ve konsültasyon nedeni", "tone": "neutral", "groups": [{"g": "Danışan birim ve neden", "f": [{"t": "sel", "id": "birim", "l": "İsteyen birim", "o": ["Acil servis", "Servis", "Yoğun bakım"], "req": 1}, {"t": "sel", "id": "servistipi", "l": "Servis tipi", "o": ["Dahiliye (genel)", "Kardiyoloji", "Göğüs hastalıkları", "Gastroenteroloji / hepatoloji", "Hematoloji / onkoloji", "Endokrinoloji", "Enfeksiyon hastalıkları", "Nöroloji", "Genel cerrahi", "Kalp-damar cerrahisi", "Üroloji", "Ortopedi", "Beyin cerrahisi", "Kadın hastalıkları ve doğum", "Dahili yoğun bakım", "Cerrahi / anestezi yoğun bakım", "Koroner yoğun bakım", "Acil servis", "Diğer"], "req": 1}, {"t": "text", "id": "servisadi", "l": "Servis / YBÜ adı"}, {"t": "text", "id": "isteyen", "l": "İsteyen hekim"}, {"t": "sel", "id": "istenenaciliyet", "l": "İstemdeki aciliyet", "o": ["Acil", "Öncelikli", "Rutin"]}, {"t": "multi", "id": "neden", "l": "Neden (birden fazla seçilebilir)", "req": 1, "o": ["ABH / kreatinin yüksekliği", "Elektrolit bozukluğu", "Asit-baz bozukluğu", "Volüm yükü / diüretik direnci", "Hipertansiyon", "Proteinüri / hematüri", "Bilinen KBH", "HD hastası", "PD hastası", "Nakil hastası", "RRT endikasyonu / kateter", "Böbreğe göre ilaç dozu", "Perioperatif değerlendirme", "Zehirlenme", "Diğer"]}, {"t": "area", "id": "soru", "l": "İsteyen ekibin sorusu (tek cümle)", "req": 1, "ph": "örn. Postoperatif 2. gün kreatinin 0,9'dan 2,1 mg/dL'ye yükseldi; etiyoloji ve RRT gereksinimi?"}, {"t": "note", "x": "Soru açık değilse isteyen hekimle konuşup netleştirin. Yanıtınızın sonunda bu soruya doğrudan cevap verin (Bölüm 10)."}]}, {"g": "Hasta ve zaman bilgisi", "f": [{"t": "text", "id": "protokol", "l": "Protokol no", "req": 1}, {"t": "num", "id": "yas", "l": "Yaş", "u": "yıl", "req": 1}, {"t": "sel", "id": "cins", "l": "Cinsiyet", "o": ["Kadın", "Erkek"], "req": 1}, {"t": "text", "id": "istemzaman", "l": "İstem tarihi / saati", "ph": "gg.aa.yyyy ss:dd", "h": "Biçim: gg.aa.yyyy ss:dd. Araştırma kaydında tarih saklanmaz; yalnızca süre ve ay hesaplanır."}, {"t": "text", "id": "degzaman", "l": "Değerlendirme tarihi / saati", "ph": "gg.aa.yyyy ss:dd", "req": 1, "h": "Biçim: gg.aa.yyyy ss:dd. Araştırma kaydında tarih saklanmaz; yalnızca süre ve ay hesaplanır."}, {"t": "sel", "id": "belirlenenaciliyet", "l": "Sizin belirlediğiniz aciliyet", "o": ["Acil", "Öncelikli", "Rutin"], "req": 1}, {"t": "text", "id": "asistan", "l": "Değerlendiren asistan", "req": 1}, {"t": "text", "id": "uzman", "l": "Sorumlu uzman", "req": 1}]}, {"g": "", "f": [{"t": "note", "x": "Önerilen yanıt süreleri (kurum protokolüne göre uyarlayın): acil ≤ 1 saat, öncelikli aynı mesai günü, rutin ≤ 24 saat. Aciliyeti istemdeki ifadeye göre değil, kırmızı bayrak taramasına göre belirleyin."}]}]}, {"id": "s1", "n": "1", "title": "Kırmızı bayrak: acil tarama", "tone": "red", "lead": "Hasta başında, öykü ve muayeneden önce doldurun. Bir madde bile işaretliyse sorumlu uzmanı hemen arayın ve ilk müdahaleyi eşzamanlı başlatın.", "groups": [{"g": "A. Genel durum", "f": [{"t": "check", "id": "rf_abcde", "rf": 1, "l": "ABCDE'de bozulma", "h": "Havayolu tehdidi, SpO₂ < %90 veya solunum sıkıntısı, SKB < 90 mmHg veya OAB < 65 mmHg, bilinç bozukluğu"}, {"t": "check", "id": "rf_news", "rf": 1, "l": "NEWS2 ≥ 7 (5–6 ise acil değerlendirme)", "h": "NEWS2: solunum sayısı, SpO₂, oksijen desteği, KB, nabız, bilinç, ateş"}, {"t": "check", "id": "rf_sepsis", "rf": 1, "l": "Sepsis veya septik şok şüphesi", "h": "Enfeksiyon odağı + organ disfonksiyonu; vazopressör gereksinimi, laktat > 2 mmol/L"}]}, {"g": "B. Elektrolit ve asit-baz", "f": [{"t": "check", "id": "rf_hiperk", "rf": 1, "l": "Hiperkalemi: K⁺ ≥ 6,5 mmol/L veya herhangi bir düzeyde EKG değişikliği", "h": "Sivri T, PR uzaması, P kaybı, QRS genişlemesi, bradikardi, sinüs dalgası. K⁺ ≥ 6,5 mmol/L veya hızla yükseliyorsa EKG değişikliğinden bağımsız acil RRT değerlendirilir. Hemoliz ve psödohiperkalemiyi dışla, ama EKG değişikliği varsa tedaviyi bekletme.", "cards": ["Hiperkalemi"]}, {"t": "check", "id": "rf_hipok", "rf": 1, "l": "Ağır hipokalemi: K⁺ < 2,5 mmol/L veya aritmi, paralizi", "cards": ["Hipokalemi"]}, {"t": "check", "id": "rf_asidoz", "rf": 1, "l": "Ağır metabolik asidoz: pH < 7,15 veya hızla kötüleşen asidoz", "h": "pH < 7,15 mutlak, 7,15–7,20 göreceli RRT endikasyonudur (özellikle hemodinami bozuk veya volüm yükü bikarbonatı engelliyorsa). Anyon açığını ve osmolal açığı hesapla (Bölüm 7); toksik alkol, laktik asidoz, ketoasidozu düşün.", "cards": ["Kan gazı değerlendirme", "Metabolik asidoz"]}, {"t": "check", "id": "rf_hipona", "rf": 1, "l": "Ağır semptomlu hiponatremi veya Na⁺ < 120 mmol/L", "h": "Kusma, nöbet, bilinç bozukluğu, kardiyorespiratuvar distres → %3 NaCl 100 mL, 10 dakikada IV; yanıt yoksa en çok 3 kez tekrarlanır (hedef ilk saatlerde 4–6 mmol/L artış). Kronik hiponatremide düzeltme sınırı 24 saatte en çok 10 mmol/L; ODS riski yüksekse (Na < 105, hipokalemi, alkolizm, malnütrisyon, ileri karaciğer hastalığı) 8 mmol/L.", "cards": ["Hiponatremi"]}, {"t": "check", "id": "rf_hiperna", "rf": 1, "l": "Na⁺ ≥ 160 mmol/L veya nörolojik bulgulu hipernatremi", "cards": ["Hipernatremi"]}, {"t": "check", "id": "rf_hiperca", "rf": 1, "l": "Hiperkalsemik kriz: düzeltilmiş Ca ≥ 14 mg/dL (≥ 3,5 mmol/L) veya bilinç bozukluğu, aritmi", "cards": ["Kalsiyum bozuklukları"]}, {"t": "check", "id": "rf_tls", "rf": 1, "l": "Tümör lizis sendromu veya rabdomiyoliz (CK > 5000 U/L) ile ABH, hiperkalemi ya da hiperfosfatemi", "cards": ["Onkonefroloji", "Akut böbrek hasarı"]}]}, {"g": "C. Volüm ve üremi", "f": [{"t": "check", "id": "rf_volum", "rf": 1, "l": "Diüretiğe yanıtsız volüm yükü: akciğer ödemi, hipoksemi", "cards": ["Volüm ve sıvı tedavisi", "Kardiyorenal sendrom"]}, {"t": "check", "id": "rf_uremi", "rf": 1, "l": "Üremik komplikasyon: perikardit (frotman), ensefalopati (asteriksis, konfüzyon), üremik kanama"}, {"t": "check", "id": "rf_anuri", "rf": 1, "l": "Anüri ≥ 12 saat veya < 0,3 mL/kg/sa idrar ≥ 24 saat", "h": "Ani anüride önce obstrüksiyonu (glob, sonda tıkanıklığı, tek böbrek) ve vasküler oklüzyonu dışla."}, {"t": "check", "id": "rf_bun", "rf": 1, "l": "Üre ≥ 240 mg/dL (BUN ≥ 112 mg/dL)", "h": "AKIKI-2'deki RRT başlatma eşiği. Tek başına mutlak endikasyon değildir; klinik tabloyla birlikte değerlendir."}]}, {"g": "D. Zehirlenme", "f": [{"t": "check", "id": "rf_toksin", "rf": 1, "l": "Diyalizle uzaklaştırılabilen zehirlenme şüphesi", "h": "Lityum, metanol, etilen glikol, salisilat, metformine bağlı laktik asidoz, valproat, teofilin, barbitürat. Osmolal açık > 10 mOsm/kg toksik alkol açısından anlamlıdır. Ulusal Zehir Danışma Merkezi (UZEM): 114.", "cards": ["Zehirlenmelerde ekstrakorporeal tedavi"]}]}, {"g": "E. Böbreğe özgü acil tablolar", "f": [{"t": "check", "id": "rf_rpgn", "rf": 1, "l": "Hızla ilerleyen GN veya pulmoner-renal sendrom şüphesi", "h": "Günler içinde yükselen kreatinin + aktif idrar sedimenti (dismorfik eritrosit, eritrosit silendiri) ± hemoptizi, alveoler kanama. ANCA ve anti-GBM aynı gün istenir.", "cards": ["HİGN ve TMA"]}, {"t": "check", "id": "rf_tma", "rf": 1, "l": "Trombotik mikroanjiyopati: trombositopeni + mikroanjiyopatik hemolitik anemi + ABH", "h": "Şistosit, LDH ↑, haptoglobin ↓, direkt Coombs (–). Plazma değişiminden önce ADAMTS13 örneği alınır.", "cards": ["HİGN ve TMA"]}, {"t": "check", "id": "rf_htacil", "rf": 1, "l": "Hipertansif acil durum: KB ≥ 180/120 mmHg + akut organ hasarı", "h": "Ensefalopati, akciğer ödemi, akut koroner sendrom, ABH, retinopati (eksuda, kanama, papilödem), TMA.", "cards": ["Hipertansiyon"]}, {"t": "check", "id": "rf_gebelik", "rf": 1, "l": "Gebe veya lohusada ABH, preeklampsi bulguları ya da HELLP", "cards": ["Gebelikte böbrek"]}]}, {"g": "F. Diyaliz ve nakil hastası", "f": [{"t": "check", "id": "rf_hd", "rf": 1, "l": "HD hastası: damar yolu kanaması veya trombozu, kateter ilişkili kan dolaşımı enfeksiyonu, kaçırılmış seans + hiperkalemi veya ödem", "cards": ["HD hastasında acil durumlar"]}, {"t": "check", "id": "rf_pd", "rf": 1, "l": "PD hastası: bulanık efluent, karın ağrısı, ateş (peritonit), çıkış yeri veya tünel enfeksiyonu", "h": "Efluentte lökosit > 100/µL ve PMN > %50 peritonit lehinedir (en az 2 saat bekleme süresinden sonra).", "cards": ["Periton diyalizi"]}, {"t": "check", "id": "rf_nakil", "rf": 1, "l": "Nakil hastası: greft disfonksiyonu (kreatinin artışı, oligüri), ateş, greft hassasiyeti", "h": "Aynı gün nakil ekibine bildir. Kalsinörin inhibitörü düzeyi, idrar tahlili ve greft Doppler USG iste.", "cards": ["Böbrek nakilli hasta"]}]}, {"g": "Sonuç", "f": [{"t": "rfsum"}, {"t": "text", "id": "uzmanaranma", "l": "Uzmana bildirim saati ve verilen talimat", "ph": "örn. 14:20 · Dr. … · hiperkalemi tedavisi başlatıldı"}]}]}, {"id": "s3", "n": "2", "title": "Hasta kategorisi ve bazal böbrek durumu", "tone": "neutral", "groups": [{"g": "", "f": [{"t": "sel", "id": "kategori", "l": "Kategori", "req": 1, "o": ["Bilinen böbrek hastalığı yok", "KBH (diyaliz dışı)", "Hemodiyaliz (merkez)", "Ev hemodiyalizi", "Periton diyalizi", "Böbrek nakli", "Bilinmiyor"]}, {"t": "text", "id": "bazalcr", "l": "Bazal kreatinin (mg/dL) ve tarihi", "ph": "örn. 0,9 · 03.2026", "h": "Son 7–365 gündeki en düşük kararlı değer. Bilinmiyorsa belirtin; tahmini bazal değer yanıltıcı olabilir."}, {"t": "text", "id": "kbhevre", "l": "KBH evresi (G ve A) ve etiyolojisi", "ph": "örn. G3b A2 · diyabetik böbrek hastalığı", "show": "kategori=KBH (diyaliz dışı)"}]}, {"g": "Diyaliz hastası", "show": "kategori~diyaliz", "f": [{"t": "text", "id": "hdmerkez", "l": "Diyaliz merkezi, seans günleri, son seans", "ph": "örn. RTEÜ HD · Pzt-Çrş-Cum · dün"}, {"t": "text", "id": "kuruagirlik", "l": "Kuru ağırlık / güncel ağırlık (kg)"}, {"t": "sel", "id": "damaryolu", "l": "Damar yolu", "o": ["AVF", "AVG", "Tünelli kateter", "Geçici kateter", "PD kateteri"]}, {"t": "text", "id": "damaryeri", "l": "Damar yolu yeri ve sorunu"}, {"t": "text", "id": "rezidu", "l": "Rezidüel idrar (mL/gün)"}, {"t": "text", "id": "pdrecete", "l": "PD: yöntem (SAPD/APD), solüsyonlar, son peritonit", "show": "kategori=Periton diyalizi"}]}, {"g": "Böbrek nakli", "show": "kategori=Böbrek nakli", "f": [{"t": "text", "id": "nakiltarih", "l": "Nakil tarihi, donör tipi, merkez"}, {"t": "text", "id": "nakilbazal", "l": "Greft bazal kreatinini"}, {"t": "text", "id": "immun", "l": "İmmünsüpresifler ve son düzeyler", "ph": "örn. takrolimus 3 mg/gün · düzey 7,2 ng/mL"}, {"t": "text", "id": "rejeksiyon", "l": "Rejeksiyon öyküsü, CMV/BK virüs durumu"}]}, {"g": "", "f": [{"t": "sel", "id": "gebelik", "l": "Doğurganlık çağındaki kadında gebelik durumu", "o": ["Uygulanamaz", "Gebe değil (β-hCG negatif)", "Gebe", "Lohusa (≤ 6 hafta)", "Bilinmiyor"], "show": "cins=Kadın"}]}]}, {"id": "s4", "n": "3", "title": "Başvuru şikâyeti ve hastalık öyküsü", "tone": "neutral", "groups": [{"g": "", "f": [{"t": "text", "id": "sikayet", "l": "Başvuru şikâyeti", "req": 1}, {"t": "text", "id": "yatistarih", "l": "Yatış tarihi", "ph": "gg.aa.yyyy", "h": "Acil servis başvurusunda boş bırakın."}, {"t": "text", "id": "yatis", "l": "Yatış tanısı"}, {"t": "area", "id": "oyku", "l": "Hastalık öyküsü (kronolojik)", "req": 1, "ph": "Başlangıç, seyir, yapılan tedaviler ve yanıt"}, {"t": "multi", "id": "hastaneici", "l": "Hastane içi olaylar", "o": ["Cerrahi / anestezi", "Hipotansiyon atağı", "Kanama / transfüzyon", "Sepsis", "İyotlu kontrast", "Nefrotoksik ilaç", "Yeni ilaç başlanması", "Kalp yetmezliği dekompansasyonu", "Kardiyak arrest", "Yok"]}, {"t": "note", "x": "Kreatinin artışını olaylarla aynı zaman çizelgesinde gösterin: hangi olaydan kaç saat sonra yükseldiği etiyolojiyi daraltır (örn. kontrasttan 24–72 saat sonra, hipotansiyondan sonra, ilaç başlanmasından 7–10 gün sonra AİN)."}]}]}, {"id": "s5", "n": "4", "title": "Böbrek odaklı anamnez", "tone": "neutral", "groups": [{"g": "Volüm ve hemodinami", "f": [{"t": "multi", "id": "volumkayip", "l": "Sıvı kaybı / yetersiz alım", "o": ["Kusma", "İshal", "Kanama", "Dren / fistül kaybı", "Ateş, terleme", "Ağızdan alım azlığı", "Poliüri", "Yok"]}, {"t": "text", "id": "aldicikar", "l": "Son 24 saat aldığı / çıkardığı, kilo değişimi"}, {"t": "multi", "id": "hipervolemi", "l": "Hipervolemi bulgusu", "o": ["Ödem", "Ortopne / PND", "Kilo artışı", "Asit", "Yok"]}]}, {"g": "İdrar", "f": [{"t": "text", "id": "idrarmiktar", "l": "İdrar miktarı (son 6 / 12 / 24 saat, mL)", "h": "Sondalı hastada saatlik idrar takibi. Ani anüride sonda tıkanıklığını kontrol edin."}, {"t": "multi", "id": "idrarbulgu", "l": "İdrar yakınması", "o": ["Makroskopik hematüri", "Köpüklü idrar", "Koyu (kola renkli) idrar", "Dizüri / sık idrar", "Alt üriner sistem semptomu", "Böğür ağrısı / taş", "Yok"]}]}, {"g": "Obstrüksiyon riski", "f": [{"t": "multi", "id": "obstruksiyon", "l": "", "o": ["Prostat hastalığı", "Pelvik / retroperitoneal kitle", "Taş öyküsü", "Tek böbrek", "Nörojenik mesane", "Antikolinerjik / opioid", "Sonda sorunu", "Yok"]}]}, {"g": "Nefrotoksin ve ilaç taraması (son 7 gün)", "f": [{"t": "multi", "id": "nefrotoksin", "l": "", "o": ["NSAİİ / COX-2 inhibitörü", "ACEİ / ARB / ARNİ", "MRA (spironolakton, eplerenon, finerenon)", "SGLT2 inhibitörü", "Diüretik", "Aminoglikozid", "Vankomisin (± piperasilin-tazobaktam)", "Kolistin / amfoterisin B", "Asiklovir / tenofovir", "TMP-SMX", "PPİ", "Lityum", "Kalsinörin inhibitörü", "Metotreksat / sisplatin / ifosfamid", "İmmün kontrol noktası inhibitörü", "Bifosfonat", "İyotlu kontrast", "Bitkisel ürün / reçetesiz ilaç", "Metformin", "Digoksin", "Yok"]}, {"t": "text", "id": "kontrast", "l": "Kontrast: tarih, işlem, miktar", "show": "nefrotoksin~kontrast"}, {"t": "note", "x": "TMP-SMX ve simetidin kreatinin sekresyonunu azaltarak GFR değişmeden kreatinini yükseltebilir. SGLT2 inhibitörü ve ACEİ/ARB başlangıcındaki %30'a kadar kreatinin artışı hemodinamiktir; akut hastalıkta geçici kesilmesi düşünülür. SGLT2 inhibitörü kullanan akut hastada öglisemik ketoasidozu düşünün."}]}, {"g": "Sistemik hastalık ipuçları", "f": [{"t": "multi", "id": "sistemik", "l": "", "o": ["Diyabet", "Hipertansiyon", "Kalp yetmezliği", "Siroz", "Döküntü / purpura", "Artralji / artrit", "Hemoptizi", "Sinüzit / otit", "Kemik ağrısı, anemi, hiperkalsemi (miyelom?)", "Yakın zamanda enfeksiyon (boğaz, deri)", "Kas ağrısı / güçsüzlük (rabdomiyoliz?)", "Kemoterapi / malignite", "Hepatit B / C, HIV", "Yok"]}, {"t": "note", "x": "Vaskülit, SLE, miyelom ve post-enfeksiyöz GN ipuçları seroloji istemini (Bölüm 7) yönlendirir.", "cards": ["Proteinüri ve hematüri", "HİGN ve TMA", "Onkonefroloji"]}]}, {"g": "Aile ve sosyal öykü", "f": [{"t": "text", "id": "aile", "l": "Aile öyküsü", "ph": "ADPKD, Alport, KBH, diyaliz"}, {"t": "text", "id": "sosyal", "l": "Sosyal öykü", "ph": "Alkol, madde, sigara, mesleki maruziyet"}]}]}, {"id": "s6", "n": "5", "title": "Özgeçmiş, ilaçlar ve kreatinin seyri", "tone": "neutral", "groups": [{"g": "", "f": [{"t": "area", "id": "ozgecmis", "l": "Komorbiditeler", "ph": "KAH, KY (EF), DM, siroz, malignite, KOAH…"}, {"t": "area", "id": "ilaclar", "l": "Güncel ilaçlar ve dozları", "ph": "İsim · doz · başlama tarihi", "h": "Böbrek işlevine göre doz ayarı gereken ilaçları işaretleyin."}, {"t": "text", "id": "alerji", "l": "Alerji"}, {"t": "sel", "id": "islevsellik", "l": "İşlevsellik / kırılganlık", "o": ["Bağımsız", "Kısmen bağımlı", "Tam bağımlı"]}, {"t": "text", "id": "bakimhedef", "l": "Bakım hedefleri, hasta tercihleri", "ph": "Palyatif bakım, RRT'ye ilişkin önceden belirtilmiş istek", "h": "RRT kararında belirleyicidir.", "cards": ["Yaşlı hasta ve konservatif bakım"]}]}, {"g": "KDIGO evrelemesi (otomatik)", "f": [{"t": "num", "id": "cr_bazal", "l": "Bazal kreatinin", "u": "mg/dL"}, {"t": "num", "id": "cr_simdi", "l": "Güncel / en yüksek kreatinin", "u": "mg/dL"}, {"t": "num", "id": "cr_48", "l": "Son 48 saatteki en düşük kreatinin", "u": "mg/dL"}, {"t": "num", "id": "uo_hiz", "l": "İdrar çıkışı", "u": "mL/kg/sa"}, {"t": "num", "id": "uo_sure", "l": "Bu idrar çıkışının süresi", "u": "saat"}, {"t": "check", "id": "rrt_basladi", "l": "RRT başlandı"}, {"t": "calc", "k": "kdigo"}, {"t": "area", "id": "cr_seyir", "l": "Kreatinin / üre seyri", "ph": "Tarih · kreatinin · üre · idrar miktarı"}, {"t": "note", "x": "KDIGO 2012: 48 saatte ≥ 0,3 mg/dL veya 7 gün içinde ≥ 1,5 kat artış ya da 6 saat < 0,5 mL/kg/sa idrar = ABH. AKD: 7–90 gün süren böbrek işlev bozukluğu (eGFR < 60, eGFR'de ≥ %35 düşüş veya kreatininde > %50 artış); > 3 ay KBH. KDIGO 2026 ABH/AKD kılavuz taslağı yapısal biyobelirteçleri tanıma eklemeyi önermektedir; kesin metin yayımlandığında bu bölüm güncellenecektir.", "cards": ["Akut böbrek hasarı"]}]}]}, {"id": "s7", "n": "6", "title": "Fizik muayene", "tone": "neutral", "groups": [{"g": "Vital bulgular", "f": [{"t": "text", "id": "ta", "l": "KB (mmHg)", "ph": "örn. 132/78"}, {"t": "num", "id": "nabiz", "l": "Nabız", "u": "/dk"}, {"t": "num", "id": "ss", "l": "Solunum sayısı", "u": "/dk"}, {"t": "num", "id": "spo2", "l": "SpO₂", "u": "%"}, {"t": "text", "id": "o2", "l": "Oksijen desteği"}, {"t": "num", "id": "ates", "l": "Ateş", "u": "°C"}, {"t": "num", "id": "kilo", "l": "Kilo", "u": "kg"}, {"t": "sel", "id": "bilinc", "l": "Bilinç", "o": ["Açık, koopere", "Konfü", "Somnolans", "Koma"]}, {"t": "text", "id": "vazopressor", "l": "Vazopressör / inotrop (doz)"}]}, {"g": "Volüm değerlendirmesi", "f": [{"t": "multi", "id": "hipovolemibulgu", "l": "Hipovolemi lehine", "o": ["Ortostatik hipotansiyon", "Taşikardi", "Kuru mukoza", "Kapiller dolum > 3 sn", "Düşük JVP", "Yok"]}, {"t": "multi", "id": "hipervolemibulgu", "l": "Hipervolemi lehine", "o": ["JVP artışı", "Periferik ödem", "Bazal raller", "Plevral efüzyon", "S3", "Asit", "Yok"]}, {"t": "text", "id": "pocus", "l": "POCUS (yapıldıysa)", "ph": "VCI çapı / kollaps · akciğer B-çizgileri · VExUS derecesi · hidronefroz · mesane hacmi", "h": "VExUS 0–3: VCI ≥ 2 cm iken hepatik, portal ve intrarenal ven Doppler örüntüleri. Derece 3 ağır sistemik venöz konjesyonu gösterir."}, {"t": "sel", "id": "volumsonuc", "l": "Volüm durumu kararı", "req": 1, "o": ["Hipovolemik", "Övolemik", "Hipervolemik", "Hipervolemik, efektif arteriyel hacmi düşük (KY / siroz)", "Karar verilemedi"]}, {"t": "note", "x": "Tek bir bulgu güvenilir değildir; öykü, muayene, POCUS ve sıvı dengesini birlikte yorumlayın.", "cards": ["Volüm ve sıvı tedavisi"]}]}, {"g": "Sistemik ve böbreğe yönelik muayene", "f": [{"t": "multi", "id": "fmdiger", "l": "", "o": ["Glob vezikale", "Kostovertebral açı hassasiyeti", "Purpura / vaskülitik döküntü", "Makülopapüler döküntü (AİN?)", "Livedo / mavi parmak (kolesterol embolisi?)", "Perikardiyal frotman", "Asteriksis", "Hipertansif retinopati", "Ağız ülseri / sinovit"]}, {"t": "text", "id": "damarmuayene", "l": "Damar yolu / PD kateteri / greft muayenesi", "ph": "AVF tril ve üfürüm, kateter çıkış yeri, greft hassasiyeti"}]}]}, {"id": "s8", "n": "7", "title": "Laboratuvar", "tone": "neutral", "groups": [{"g": "Temel biyokimya ve kan gazı", "f": [{"t": "num", "id": "l_ure", "l": "Üre", "u": "mg/dL"}, {"t": "num", "id": "l_cr", "l": "Kreatinin", "u": "mg/dL"}, {"t": "num", "id": "l_na", "l": "Na⁺", "u": "mmol/L"}, {"t": "num", "id": "l_k", "l": "K⁺", "u": "mmol/L"}, {"t": "num", "id": "l_cl", "l": "Cl⁻", "u": "mmol/L"}, {"t": "num", "id": "l_hco3", "l": "HCO₃⁻", "u": "mmol/L"}, {"t": "num", "id": "l_ph", "l": "pH"}, {"t": "num", "id": "l_pco2", "l": "pCO₂", "u": "mmHg"}, {"t": "num", "id": "l_laktat", "l": "Laktat", "u": "mmol/L"}, {"t": "num", "id": "l_glu", "l": "Glukoz", "u": "mg/dL"}, {"t": "num", "id": "l_alb", "l": "Albümin", "u": "g/dL"}, {"t": "num", "id": "l_ca", "l": "Total Ca", "u": "mg/dL"}, {"t": "num", "id": "l_ica", "l": "İyonize Ca", "u": "mmol/L"}, {"t": "num", "id": "l_p", "l": "Fosfor", "u": "mg/dL"}, {"t": "num", "id": "l_mg", "l": "Mg", "u": "mg/dL"}, {"t": "num", "id": "l_urik", "l": "Ürik asit", "u": "mg/dL"}, {"t": "num", "id": "l_osm", "l": "Ölçülen serum osmolalitesi", "u": "mOsm/kg"}, {"t": "num", "id": "l_ck", "l": "CK", "u": "U/L"}, {"t": "text", "id": "l_hemogram", "l": "Hemogram", "ph": "Hb · lökosit · trombosit"}, {"t": "text", "id": "l_diger", "l": "Diğer", "ph": "CRP, prokalsitonin, LDH, karaciğer testleri, troponin, NT-proBNP"}]}, {"g": "İdrar", "f": [{"t": "text", "id": "tit", "l": "Tam idrar tahlili", "ph": "Dansite · pH · protein · kan · lökosit · glukoz · nitrit"}, {"t": "multi", "id": "sediment", "l": "İdrar sedimenti (taze idrarı kendiniz inceleyin)", "o": ["Bulgu yok (bland)", "Kirli-kahverengi granüler silendir / RTE hücresi (ATN)", "Dismorfik eritrosit / eritrosit silendiri (GN)", "Lökosit / lökosit silendiri (AİN, piyelonefrit)", "Kristal (ürik asit, oksalat, ilaç)", "Lipidüri / oval yağ cisimciği (nefrotik)"], "h": "Kan çubuk testi pozitif + mikroskopide eritrosit yok → miyoglobinüri veya hemoglobinüri."}, {"t": "num", "id": "u_na", "l": "İdrar Na⁺", "u": "mmol/L"}, {"t": "num", "id": "u_cr", "l": "İdrar kreatinini", "u": "mg/dL"}, {"t": "num", "id": "u_ure", "l": "İdrar üresi", "u": "mg/dL"}, {"t": "num", "id": "u_osm", "l": "İdrar osmolalitesi", "u": "mOsm/kg"}, {"t": "text", "id": "upcr", "l": "UPCR / UACR (mg/g)"}, {"t": "text", "id": "ukultur", "l": "İdrar kültürü"}]}, {"g": "Hesaplamalar (otomatik)", "f": [{"t": "calc", "k": "lab"}, {"t": "note", "x": "FENa diüretik kullanımında, KBH'de, kontrast ve pigment nefropatisinde, erken ATN'de güvenilirliğini yitirir; diüretik alan hastada FEÜre tercih edilir. eGFR denklemleri kararlı durum varsayar; ABH'de böbrek işlevini olduğundan yüksek gösterir."}]}, {"g": "Klinik şüpheye göre ek tetkikler", "f": [{"t": "multi", "id": "ektetkik", "l": "", "o": ["ANCA (MPO, PR3)", "Anti-GBM", "ANA, anti-dsDNA", "C3, C4", "Kriyoglobulin", "HBsAg, anti-HCV, anti-HIV", "SPEP + serum serbest hafif zincir (κ/λ)", "Anti-PLA2R", "Periferik yayma (şistosit)", "LDH, haptoglobin, retikülosit, direkt Coombs", "ADAMTS13 (tedavi öncesi)", "STEC / Shiga toksin", "İlaç düzeyi (vankomisin, aminoglikozid, takrolimus, lityum, digoksin, salisilat)", "Toksik alkol / etilen glikol", "Ketonlar", "Yapısal ABH biyobelirteci (varsa)"]}, {"t": "note", "x": "Aktif sediment veya açıklanamayan ABH'de böbrek biyopsisi endikasyonunu uzmanla görüşün.", "cards": ["Proteinüri ve hematüri", "HİGN ve TMA"]}]}]}, {"id": "s9", "n": "8", "title": "Görüntüleme ve EKG", "tone": "neutral", "groups": [{"g": "", "f": [{"t": "text", "id": "usg", "l": "Böbrek ve mesane USG", "ph": "Boyutlar (sağ/sol) · parankim ekojenitesi · kortikal kalınlık · hidronefroz derecesi · taş, kist · postmiksiyonel rezidü", "h": "Normal böbrek uzunluğu yaklaşık 9–12 cm. < 9–10 cm ve artmış kortikal ekojenite uzun süreli KBH'yi düşündürür; diyabet, amiloidoz, ADPKD, kronik obstrüksiyon ve HIV nefropatisinde boyut korunabilir. ABH'de ilk 24 saatte USG önerilir."}, {"t": "text", "id": "doppler", "l": "Renal Doppler (gerekirse)", "ph": "Renal arter / ven trombozu, stenoz; greftte RI"}, {"t": "text", "id": "bt", "l": "BT / diğer", "ph": "Kontrastsız BT (taş), kontrastlı görüntüleme gereksinimi"}, {"t": "text", "id": "akcgrafi", "l": "Akciğer grafisi", "ph": "Pulmoner konjesyon, efüzyon, kateter ucu"}, {"t": "text", "id": "ekg", "l": "EKG", "ph": "Ritim · hiperkalemi bulgusu · QTc · iskemi", "cards": ["Hiperkalemi"]}, {"t": "text", "id": "eko", "l": "Ekokardiyografi", "ph": "EF, perikardiyal efüzyon, sağ kalp yüklenmesi"}, {"t": "note", "x": "Gerekli kontrastlı inceleme ABH nedeniyle ertelenmemelidir: en düşük doz, düşük veya izo-ozmolar ajan, nefrotoksik ilaçlara ara verme. Yatan hastada profilaksi: izotonik NaCl (veya izotonik bikarbonat) 1 mL/kg/sa, işlemden 6–12 saat önce başlayıp 6–12 saat sonrasına kadar (kalp yetmezliği ve volüm yükünde doz bireyselleştirilir)."}]}]}, {"id": "s10", "n": "9", "title": "Değerlendirme", "tone": "blue", "groups": [{"g": "Sentez", "f": [{"t": "sel", "id": "tablo", "l": "Böbrek tablosu", "req": 1, "o": ["ABH", "KBH zemininde ABH", "AKD (7–90 gün)", "KBH, akut değişiklik yok", "Diyaliz hastası, akut sorun", "Nakil hastası, greft disfonksiyonu", "Böbrek işlevi normal; elektrolit / asit-baz sorunu", "Diğer"]}, {"t": "multi", "id": "etiyoloji", "l": "Etiyoloji kategorisi", "o": ["Prerenal / hemodinamik (hipovolemi, KY, siroz, ilaç)", "Renal: ATN (iskemik / toksik / septik)", "Renal: AİN", "Renal: glomerüler (GN)", "Renal: vasküler (TMA, kolesterol embolisi, renal ven trombozu)", "Renal: tübüler tıkanma (miyelom, kristal, pigment)", "Postrenal (obstrüksiyon)", "Çok etkenli"]}, {"t": "multi", "id": "dxkat", "l": "Ön tanı kategorisi", "req": 1, "h": "Araştırma kaydı serbest metin ön tanıları saklamaz; analizde bu kategoriler kullanılır. Yukarıdaki sıralı ön tanılarla uyumlu olanların tümünü seçin.", "o": ["ATN: iskemik / septik", "ATN: nefrotoksik (ilaç, kontrast)", "Prerenal / hipovolemi", "Kardiyorenal sendrom", "Hepatorenal sendrom / sirozda ABH", "Obstrüktif nefropati", "Akut interstisyel nefrit", "Glomerülonefrit / HİGN", "Trombotik mikroanjiyopati", "Rabdomiyoliz / pigment nefropatisi", "Tümör lizis sendromu", "Miyelom / hafif zincir", "Hiperkalemi", "Hipokalemi", "Hiponatremi", "Hipernatremi", "Ca / P / Mg bozukluğu", "Metabolik asidoz", "Metabolik alkaloz", "Volüm yükü / diüretik direnci", "Hipertansif acil durum", "Zehirlenme", "KBH ilerlemesi / üremi", "Diyaliz hastası: damar yolu sorunu", "Diyaliz hastası: yetersiz diyaliz / seans kaçırma", "PD peritoniti / kateter sorunu", "Greft disfonksiyonu", "Gebelikle ilişkili böbrek sorunu", "Diğer"]}, {"t": "note", "x": "Hastane içi ABH sıklıkla çok etkenlidir (sepsis + hipotansiyon + nefrotoksin). Prerenal tanısı, uygun volüm düzeltmesinden sonra 24–72 saatte kreatininin düzelmesiyle doğrulanır."}]}, {"g": "Ön tanılar (olasılık sırasına göre)", "f": [{"t": "dx", "id": "dx1", "l": "1"}, {"t": "dx", "id": "dx2", "l": "2"}, {"t": "dx", "id": "dx3", "l": "3"}]}, {"g": "Risk ve prognoz", "f": [{"t": "text", "id": "fst", "l": "Furosemid stres testi (uygunsa)", "h": "Diüretik almamış, övolemik hastada 1 mg/kg (önceden loop diüretik alıyorsa 1,5 mg/kg) IV furosemid; 2 saatte < 200 mL idrar ABH'nin ilerleme ve RRT gereksinimi riskini öngörür."}, {"t": "sel", "id": "rrtolasilik", "l": "Yakın dönemde RRT gereksinimi olasılığı", "o": ["Düşük", "Orta", "Yüksek", "RRT endikasyonu şu an var"]}]}]}, {"id": "s11", "n": "10", "title": "Öneriler", "tone": "green", "lead": "Önerileri uygulanabilir, numaralı ve zamanlı yazın; her öneri kimin, ne zaman, neyi yapacağını göstermelidir.", "groups": [{"g": "Acil / eşzamanlı tedavi", "f": [{"t": "area", "id": "o_acil", "l": "", "ph": "örn. 10 IU kısa etkili insülin + %10 dekstroz, kalsiyum glukonat, EKG monitörü, 2 saat sonra K⁺ kontrolü"}]}, {"g": "Sıvı ve volüm", "f": [{"t": "multi", "id": "o_sivi", "l": "", "o": ["Volüm replasmanı (dengeli kristaloid tercih)", "Sıvı kısıtlaması", "Loop diüretik (doz ve yanıt hedefi)", "Ardışık nefron blokajı", "Günlük tartı", "Aldığı-çıkardığı takibi", "Saatlik idrar takibi", "Sonda takılması / kontrolü"]}, {"t": "area", "id": "o_sivi_detay", "l": "Ayrıntı", "ph": "Sıvı türü, hızı, hedef ve yeniden değerlendirme zamanı", "cards": ["Volüm ve sıvı tedavisi", "Kardiyorenal sendrom", "Sirozda ABH ve hepatorenal sendrom"]}]}, {"g": "İlaç düzenlemesi", "f": [{"t": "area", "id": "o_ilac_kes", "l": "Kesilecek / ara verilecek ilaçlar", "ph": "NSAİİ, ACEİ/ARB, MRA, SGLT2i, metformin, nefrotoksik antibiyotik…"}, {"t": "area", "id": "o_ilac_doz", "l": "Doz ayarı ve düzey izlemi", "ph": "İlaç · yeni doz · düzey zamanı", "h": "ABH'de eGFR'ye göre doz hesabı yanıltıcıdır; kreatinin kararlı değilken ilaç düzeyi ve klinik yanıt izlenir."}, {"t": "multi", "id": "o_k", "l": "Potasyum güvenliği", "o": ["K⁺ içeren sıvı ve ilaçları kes", "Potasyum kısıtlı diyet", "Potasyum bağlayıcı (SZC / patiromer)", "Uygulanmaz"]}]}, {"g": "Ek tetkik planı", "f": [{"t": "area", "id": "o_tetkik", "l": "", "ph": "Tetkik · gerekçe · sonuçla değişecek karar"}]}, {"g": "Renal replasman tedavisi", "f": [{"t": "sel", "id": "o_rrt", "l": "RRT kararı", "req": 1, "o": ["Endikasyon yok", "Endikasyon yok; yakın izlem", "Endikasyon var: acil başlat", "Konservatif bakım (hasta tercihi / bakım hedefi)"]}, {"t": "sel", "id": "o_rrtmod", "l": "Modalite", "o": ["Aralıklı HD", "SLED / uzatılmış HD", "CRRT (CVVHDF)", "Akut PD", "Uygulanmaz"], "show": "o_rrt~var"}, {"t": "text", "id": "o_kateter", "l": "Kateter yeri ve antikoagülasyon", "ph": "örn. sağ internal juguler, 15 cm · sitrat", "show": "o_rrt~var"}, {"t": "note", "x": "Komplikasyon yokken rutin erken RRT başlatmanın yararı gösterilmemiştir (STARRT-AKI, AKIKI-2). RRT; dirençli hiperkalemi, asidoz, volüm yükü, üremik komplikasyon veya zehirlenmede başlatılır. Kateter yeri tercihi: sağ internal juguler > femoral > sol internal juguler; subklavyen ven kalıcı damar yolu için korunur. KBH hastasında baskın olmayan koldaki venleri koruyun (damar koruma).", "cards": ["Akut RRT reçetesi", "Zehirlenmelerde ekstrakorporeal tedavi"]}]}, {"g": "Beslenme", "f": [{"t": "text", "id": "o_beslenme", "l": "", "ph": "Enerji 20–30 kcal/kg/gün · protein: RRT yok 0,8–1,0 · aralıklı RRT 1,0–1,5 · CRRT en çok 1,7 g/kg/gün (KDIGO 2012)"}]}, {"g": "İzlem", "f": [{"t": "text", "id": "o_izlem", "l": "Laboratuvar izlem sıklığı", "ph": "örn. kreatinin, elektrolit ve kan gazı 12 saatte bir"}, {"t": "text", "id": "o_yeniden", "l": "Nefroloji yeniden değerlendirme zamanı", "ph": "örn. yarın sabah vizitinde · K⁺ > 6 olursa hemen"}, {"t": "text", "id": "o_haber", "l": "Nefrolojiye hemen haber verilecek durumlar", "ph": "örn. idrar < 0,3 mL/kg/sa 6 saat, K⁺ ≥ 6,0, SpO₂ düşüşü"}]}, {"g": "Taburculuk sonrası", "f": [{"t": "multi", "id": "o_taburcu", "l": "", "o": ["ABH sonrası 3 ay içinde kreatinin, eGFR ve UACR kontrolü", "Nefroloji polikliniği randevusu", "Kesilen ilaçların yeniden başlanma planı", "Hasta ve aileye nefrotoksin eğitimi", "Gerekmiyor"], "h": "ABH sonrası KBH, kardiyovasküler olay ve tekrarlayan ABH riski artar; izlem planı epikrize yazılmalıdır."}]}, {"g": "Soruya yanıt ve iletişim", "f": [{"t": "area", "id": "o_yanit", "l": "İsteyen ekibin sorusuna doğrudan yanıt", "req": 1}, {"t": "multi", "id": "o_iletisim", "l": "", "o": ["İsteyen hekimle sözlü görüşüldü", "Hasta / yakını bilgilendirildi", "RRT için onam alındı", "Yoğun bakım ile görüşüldü", "Nakil ekibine bilgi verildi"]}, {"t": "sel", "id": "o_sonuc", "l": "Konsültasyon sonucu", "req": 1, "o": ["Nefroloji izlemi sürecek (günlük)", "Gerektiğinde yeniden değerlendirme", "Nefroloji servisine devir önerildi", "Konsültasyon sonlandırıldı"]}]}]}, {"id": "s12", "n": "11", "title": "Onay", "tone": "neutral", "groups": [{"g": "", "f": [{"t": "text", "id": "uzmansoru", "l": "Uzmana iletilecek soru / onay beklenen konu", "ph": "örn. RRT için kateter takılsın mı?"}, {"t": "check", "id": "uzmanonay", "l": "Değerlendirme ve öneriler sorumlu uzmanla görüşüldü", "req": 1}, {"t": "text", "id": "onayzaman", "l": "Görüşme saati, uzmanın ek önerisi"}, {"t": "note", "x": "Konsültasyon notu HBYS'ye aktarıldıktan sonra bu sayfayı kapatın; sayfa veri saklamaz."}]}]}], "errors": ["Kreatinini tek değerle yorumlamak; bazal değeri ve seyri aramamak.", "Anüriyi idrar sondası ve mesane USG ile kontrol etmeden ATN'ye bağlamak.", "İdrar sedimentini incelememek; GN ve AİN'i bu nedenle gözden kaçırmak.", "Diüretik alan hastada FENa'ya dayanarak prerenal / renal ayrımı yapmak.", "ABH sürerken eGFR'ye göre ilaç dozu hesaplamak.", "Hiperkalemide EKG değişikliği varken laboratuvar tekrarını bekleyip kalsiyumu geciktirmek.", "Kronik hiponatremiyi 24 saatte 10 mmol/L'den hızlı düzeltmek.", "Diyaliz hastasının fistül kolundan kan almak veya KB ölçmek.", "Taburculuk epikrizine ABH sonrası izlem planını yazmamak."], "refs": ["Khwaja A. KDIGO clinical practice guidelines for acute kidney injury. Nephron Clin Pract. 2012;120(4):c179-84. PMID: 22890468. doi:10.1159/000339789", "KDIGO 2026 Clinical Practice Guideline for Acute Kidney Injury and Acute Kidney Disease: public review draft. Kidney Disease: Improving Global Outcomes; 2026. https://kdigo.org/kdigo-2026-aki-akd-guideline-draft-available-for-public-review/", "Kidney Disease: Improving Global Outcomes (KDIGO) CKD Work Group. KDIGO 2024 clinical practice guideline for the evaluation and management of chronic kidney disease. Kidney Int. 2024;105(4S):S117-S314. PMID: 38490803. doi:10.1016/j.kint.2023.10.018", "Ostermann M, Lumlertgul N, Jeong R, See E, Joannidis M, James M. Acute kidney injury. Lancet. 2025;405(10474):241-56. PMID: 39826969. doi:10.1016/S0140-6736(24)02385-7", "Ostermann M, Forni LG, Joannidis M, Kane-Gill SL, Legrand M, Lumlertgul N, et al. State of the art: renal recovery after AKI - from basic science to clinical practice. Intensive Care Med. 2025;51(8):1490-507. PMID: 40719889. doi:10.1007/s00134-025-08035-4", "STARRT-AKI Investigators; Bagshaw SM, Wald R, Adhikari NKJ, Bellomo R, da Costa BR, Dreyfuss D, et al. Timing of initiation of renal-replacement therapy in acute kidney injury. N Engl J Med. 2020;383(3):240-51. PMID: 32668114. doi:10.1056/NEJMoa2000741", "Gaudry S, Hajage D, Martin-Lefevre L, Lebbah S, Louis G, Moschietto S, et al. Comparison of two delayed strategies for renal replacement therapy initiation for severe acute kidney injury (AKIKI 2): a multicentre, open-label, randomised, controlled trial. Lancet. 2021;397(10281):1293-300. PMID: 33812488. doi:10.1016/S0140-6736(21)00350-0", "Semler MW, Self WH, Wanderer JP, Ehrenfeld JM, Wang L, Byrne DW, et al. Balanced crystalloids versus saline in critically ill adults. N Engl J Med. 2018;378(9):829-39. PMID: 29485925. doi:10.1056/NEJMoa1711584", "Spasovski G, Vanholder R, Allolio B, Annane D, Ball S, Bichet D, et al. Clinical practice guideline on diagnosis and treatment of hyponatraemia. Eur J Endocrinol. 2014;170(3):G1-47. PMID: 24569125. doi:10.1530/EJE-13-1020", "Fujimaru T, Hirose K, Yazawa M, Nagahama M, Kovesdy CP, et al. Management of hyperkalemia: strategic clinical actions in real-world practice. Clin Exp Nephrol. 2025;29(12):1699-711. PMID: 40705102. doi:10.1007/s10157-025-02728-2", "Perazella MA. The urine sediment as a biomarker of kidney disease. Am J Kidney Dis. 2015;66(5):748-55. PMID: 25943719. doi:10.1053/j.ajkd.2015.02.342", "Chawla LS, Davison DL, Brasha-Mitchell E, Koyner JL, Arthur JM, Shaw AD, et al. Development and standardization of a furosemide stress test to predict the severity of acute kidney injury. Crit Care. 2013;17(5):R207. PMID: 24053972. doi:10.1186/cc13015", "Beaubien-Souligny W, Rola P, Haycock K, Bouchard J, Lamarche Y, Spiegel R, et al. Quantifying systemic congestion with point-of-care ultrasound: development of the venous excess ultrasound grading system. Ultrasound J. 2020;12(1):16. PMID: 32270297. doi:10.1186/s13089-020-00163-w", "Inker LA, Eneanya ND, Coresh J, Tighiouart H, Wang D, Sang Y, et al. New creatinine- and cystatin C-based equations to estimate GFR without race. N Engl J Med. 2021;385(19):1737-49. PMID: 34554658. doi:10.1056/NEJMoa2102953", "Royal College of Physicians. National Early Warning Score (NEWS) 2: standardising the assessment of acute-illness severity in the NHS. London: RCP; 2017.", "Think Kidneys (NHS England). Acute kidney injury care bundle: recommended minimum requirements. 2016. https://www.thinkkidneys.nhs.uk/aki/", "Formdaki eşik değerleri ve formüller ayrıca bölümün e-kitap arşivindeki ders kitaplarıyla karşılaştırılmıştır: Oxford Handbook of Nephrology and Hypertension; Oxford Handbook of Dialysis; Nephrology and Hypertension Board Review; Primer on Nephrology (2. baskı); Current Diagnosis & Treatment: Nephrology & Hypertension; Nephrology Secrets (4. baskı); Harrison's Nephrology and Acid-Base Disorders (2. baskı); Absolute Nephrology Review; Nephrology in 30 Days; Nutrition in Kidney Disease."]};
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const FIELDS = {}; // id -> {def, sec}
+const form = $('#form');
+$('#org').textContent=C.org; $('#ttl').textContent=C.title; $('#ver').textContent=C.version;
+$('#use').innerHTML=C.use.map(x=>`<li>${esc(x)}</li>`).join('');
+$('#errors').innerHTML=C.errors.map(x=>`<li>${esc(x)}</li>`).join('');
+$('#refs').innerHTML=C.refs.map(x=>`<li>${esc(x).replace(/(https?:\/\/\S+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>')}</li>`).join('');
+
+function cardRef(cards){ if(!cards||!cards.length) return ''; return `<div class="card-ref"><b>İlgili karta bakınız:</b>${cards.map(c=>`<i>${esc(c)}</i>`).join('')}</div>`; }
+function showAttr(s){ return s?` data-show="${esc(s)}"`:''; }
+function fieldHTML(f,sec){
+  if(f.id) FIELDS[f.id]={def:f,sec};
+  const lab = f.l?`<label class="l${f.req?' req':''}" for="${f.id}">${esc(f.l)}</label>`:'';
+  const hint = f.h?`<div class="hint">${esc(f.h)}</div>`:'';
+  const cr = cardRef(f.cards);
+  switch(f.t){
+    case 'text': return `<div class="f"${showAttr(f.show)}>${lab}<input type="text" id="${f.id}" name="${f.id}" placeholder="${esc(f.ph||'')}">${hint}${cr}</div>`;
+    case 'area': return `<div class="f wide"${showAttr(f.show)}>${lab}<textarea id="${f.id}" name="${f.id}" placeholder="${esc(f.ph||'')}"></textarea>${hint}${cr}</div>`;
+    case 'num': return `<div class="f"${showAttr(f.show)}>${lab}<div class="unit"><input type="text" inputmode="decimal" autocomplete="off" data-num="1" id="${f.id}" name="${f.id}">${f.u?`<span>${esc(f.u)}</span>`:''}</div>${hint}</div>`;
+    case 'sel': return `<div class="f"${showAttr(f.show)}>${lab}<select id="${f.id}" name="${f.id}"><option value="">— seçin —</option>${f.o.map(o=>`<option>${esc(o)}</option>`).join('')}</select>${hint}${cr}</div>`;
+    case 'multi': return `<div class="f wide"${showAttr(f.show)}>${f.l?`<span class="l${f.req?' req':''}" style="font-size:13.5px;font-weight:700;color:var(--ink-2)">${esc(f.l)}</span>`:''}<div class="chips" id="${f.id}" role="group">${f.o.map((o,i)=>`<label class="chip"><input type="checkbox" name="${f.id}" value="${esc(o)}" id="${f.id}_${i}">${esc(o)}</label>`).join('')}</div>${hint}${cr}</div>`;
+    case 'check': return `<label class="ck f wide${f.rf?' rf':''}"${showAttr(f.show)}><input type="checkbox" id="${f.id}" name="${f.id}"${f.rf?' data-rf="1"':''}><span><span class="t${f.req?' req':''}">${esc(f.l)}</span>${(f.h||f.cards)?`<span class="sub">${hint}${cr}</span>`:''}</span></label>`;
+    case 'note': return `<div class="note"${showAttr(f.show)}><span>${esc(f.x)}</span>${cr}</div>`;
+    case 'rfsum': FIELDS['rf_none']={def:{t:'check',id:'rf_none',l:'Tüm maddeler tarandı; kırmızı bayrak yok'},sec};
+      return `<div class="rfsum off" id="rfsum"></div><label class="ck f wide" id="rfnonewrap"><input type="checkbox" id="rf_none" name="rf_none"><span><span class="t">Tüm maddeler tarandı; kırmızı bayrak yok</span></span></label>`;
+    case 'calc': return `<div class="calc" id="calc_${f.k}"></div>`;
+    case 'dx': ['', '_p', '_d'].forEach(s=>FIELDS[f.id+s]={def:{t:s==='_p'?'sel':'text',id:f.id+s},sec});
+      return `<div class="dx"><span class="dn">${f.l}.</span><input type="text" id="${f.id}" placeholder="Ön tanı" aria-label="Ön tanı ${f.l}"><select id="${f.id}_p" aria-label="Olasılık"><option value="">Olasılık</option><option>Yüksek</option><option>Orta</option><option>Düşük</option></select><input type="text" id="${f.id}_d" placeholder="Destekleyen / karşı bulgular" aria-label="Bulgular ${f.l}"></div>`;
+  }
+  return '';
+}
+form.innerHTML = C.sections.map(s=>`
+<section class="sec ${s.tone}" id="${s.id}">
+  <div class="sec-h"><span class="num">${s.n}</span><h2>${esc(s.title)}</h2></div>
+  ${s.lead?`<p class="lead">${esc(s.lead)}</p>`:''}
+  ${s.groups.map(g=>`<div class="grp"${showAttr(g.show)}>${g.g?`<h3>${esc(g.g)}</h3>`:''}<div class="fields">${g.f.map(f=>fieldHTML(f,s)).join('')}</div></div>`).join('')}
+</section>`).join('');
+$('#rail').innerHTML = C.sections.map(s=>`<a href="#${s.id}" data-sec="${s.id}"><span class="n">${s.n}</span><span>${esc(s.title)}</span><span class="dot"></span></a>`).join('') + `<a href="#out"><span class="n">→</span><span>HBYS notu</span><span></span></a><a href="#wsout"><span class="n">→</span><span>WhatsApp özeti</span><span></span></a>`;
+
+// ---- value helpers
+function val(id){
+  const d=FIELDS[id]?.def; const el=document.getElementById(id); if(!el) return '';
+  if(d && d.t==='multi') return [...form.querySelectorAll(`input[name="${id}"]:checked`)].map(x=>x.value);
+  if(el.type==='checkbox') return el.checked;
+  return el.value.trim();
+}
+function num(id){ const v=document.getElementById(id)?.value; if(v===''||v==null) return null; const s=String(v).trim().replace(/\s/g,'').replace(',','.'); if(!/^[-+]?\d*\.?\d+$/.test(s)) return null; const n=parseFloat(s); return isFinite(n)?n:null; }
+function filled(id){ const v=val(id); return Array.isArray(v)?v.length>0:(typeof v==='boolean'?v:v!==''); }
+function visible(el){ return !el.closest('[hidden]'); }
+const f1=x=>x==null?'—':(Math.round(x*10)/10).toLocaleString('tr-TR');
+const f2=x=>x==null?'—':(Math.round(x*100)/100).toLocaleString('tr-TR');
+
+// ---- conditional display
+function evalShow(expr){
+  const m=expr.match(/^(\w+)([=~])(.+)$/); if(!m) return true;
+  let v=val(m[1]); const want=m[3].toLocaleLowerCase('tr');
+  const arr=Array.isArray(v)?v:[v];
+  return arr.some(x=>{x=String(x).toLocaleLowerCase('tr'); return m[2]==='='?x===want:x.includes(want);});
+}
+function applyShow(){ document.querySelectorAll('[data-show]').forEach(el=>{ el.hidden=!evalShow(el.dataset.show); }); }
+
+// ---- calculators
+function kdigo(){
+  const b=num('cr_bazal'), c=num('cr_simdi'), m48=num('cr_48'), uo=num('uo_hiz'), t=num('uo_sure'), rrt=val('rrt_basladi');
+  let sCr=0, why=[];
+  const ratio=(b&&c)?c/b:null, delta=(m48!=null&&c!=null)?c-m48:null;
+  if(rrt){sCr=3;why.push('RRT başlandı');}
+  else if(c!=null){
+    if(ratio!=null&&ratio>=3){sCr=3;why.push(`kreatinin ${f2(ratio)} kat`);}
+    else if(c>=4&&((ratio!=null&&ratio>=1.5)||(delta!=null&&delta>=0.3))){sCr=3;why.push('kreatinin ≥ 4,0 mg/dL (akut artışla)');}
+    else if(ratio!=null&&ratio>=2){sCr=2;why.push(`kreatinin ${f2(ratio)} kat`);}
+    else if((ratio!=null&&ratio>=1.5)||(delta!=null&&delta>=0.3)){sCr=1;why.push(ratio!=null&&ratio>=1.5?`kreatinin ${f2(ratio)} kat`:`48 saatte +${f2(delta)} mg/dL`);}
+  }
+  let sUo=0;
+  if(uo!=null&&t!=null){
+    if(uo===0&&t>=12){sUo=3;why.push('anüri ≥ 12 saat');}
+    else if(uo<0.3&&t>=24){sUo=3;why.push('< 0,3 mL/kg/sa ≥ 24 saat');}
+    else if(uo<0.5&&t>=12){sUo=2;why.push('< 0,5 mL/kg/sa ≥ 12 saat');}
+    else if(uo<0.5&&t>=6){sUo=1;why.push('< 0,5 mL/kg/sa ≥ 6 saat');}
+  }
+  const st=Math.max(sCr,sUo); const any=[b,c,m48,uo,t].some(x=>x!=null)||rrt;
+  return {st,why,ratio,delta,any};
+}
+function egfr(cr,age,sex){
+  if(!cr||!age||!sex) return null; const fem=sex==='Kadın';
+  const k=fem?0.7:0.9, a=fem?-0.241:-0.302;
+  return 142*Math.pow(Math.min(cr/k,1),a)*Math.pow(Math.max(cr/k,1),-1.2)*Math.pow(0.9938,age)*(fem?1.012:1);
+}
+function labCalc(){
+  const na=num('l_na'),cl=num('l_cl'),hc=num('l_hco3'),alb=num('l_alb'),ca=num('l_ca'),glu=num('l_glu'),ure=num('l_ure'),osm=num('l_osm'),
+        pco2=num('l_pco2'),cr=num('l_cr')??num('cr_simdi'),una=num('u_na'),ucr=num('u_cr'),uure=num('u_ure');
+  const R={};
+  if(na!=null&&cl!=null&&hc!=null){
+    R.ag=na-(cl+hc); R.agc=alb!=null?R.ag+2.5*(4-alb):null;
+    const agu=R.agc??R.ag;
+    if(agu>12&&hc<24){R.dr=(agu-12)/(24-hc);}
+  }
+  if(hc!=null&&hc<24){R.win=1.5*hc+8;}
+  if(ca!=null&&alb!=null) R.cac=ca+0.8*(4-alb);
+  if(na!=null&&glu!=null&&ure!=null){R.osmc=2*na+glu/18+ure/6; if(osm!=null) R.og=osm-R.osmc;}
+  if(na!=null&&glu!=null&&glu>100) R.nac=na+1.6*(glu-100)/100;
+  if(una!=null&&cr&&na&&ucr) R.fena=(una*cr)/(na*ucr)*100;
+  if(uure!=null&&cr&&ure&&ucr) R.feure=(uure*cr)/(ure*ucr)*100;
+  if(ure!=null) R.bun=ure/2.14;
+  R.egfr=egfr(cr,num('yas'),val('cins'));
+  return R;
+}
+function interp(R){
+  const o={};
+  if(R.ag!=null){const a=R.agc??R.ag; o.ag=a>12?'Yüksek anyon açıklı metabolik asidoz lehine (laktat, keton, toksik alkol, üremi)':'Normal sınırda (referans 8–12 mmol/L; laboratuvarınıza göre değişir)';}
+  if(R.dr!=null){o.dr=R.dr<1?'< 1: yüksek anyon açıklı asidoza normal anyon açıklı (hiperkloremik) asidoz eşlik ediyor':R.dr<=2?'1–2: saf yüksek anyon açıklı asidoz':'> 2: eşlik eden metabolik alkaloz (veya kronik solunumsal asidoz)';}
+  if(R.win!=null){const p=num('l_pco2'); o.win=p==null?'Ölçülen pCO₂ girin':(p>R.win+2?'Ölçülen pCO₂ yüksek: eşlik eden solunumsal asidoz':p<R.win-2?'Ölçülen pCO₂ düşük: eşlik eden solunumsal alkaloz':'Solunumsal kompanzasyon uygun');}
+  if(R.og!=null) o.og=R.og>10?'Anlamlı: toksik alkol (metanol, etilen glikol) açısından değerlendirin':'Anlamlı değil (≤ 10)';
+  if(R.fena!=null) o.fena=R.fena<1?'< %1: prerenal lehine (diüretik yoksa)':R.fena>2?'> %2: tübüler hasar lehine':'%1–2: ara bölge';
+  if(R.feure!=null) o.feure=R.feure<35?'< %35: prerenal lehine':R.feure>50?'> %50: tübüler hasar lehine':'%35–50: ara bölge';
+  return o;
+}
+function renderCalcs(){
+  const K=kdigo(); const el=$('#calc_kdigo');
+  if(el){ el.innerHTML=`<table><tr><th>KDIGO ABH evresi</th><td>${K.any?(K.st?`<span class="stage s${K.st}">Evre ${K.st}</span> <span class="i">${esc(K.why.join(' · '))}</span>`:`<span class="stage s0">Ölçüt yok</span><span class="i">Girilen verilere göre ABH ölçütü karşılanmıyor.</span>`):'<span class="i">Bazal ve güncel kreatinin ya da idrar çıkışı girin.</span>'}</td></tr>
+  <tr><th>Kreatinin oranı (güncel / bazal)</th><td><span class="v">${f2(K.ratio)}</span></td></tr>
+  <tr><th>48 saatlik mutlak artış</th><td><span class="v">${K.delta==null?'—':(K.delta>=0?'+':'')+f2(K.delta)} mg/dL</span></td></tr></table>`; }
+  const R=labCalc(), I=interp(R), L=$('#calc_lab');
+  const row=(t,v,u,i,form)=>`<tr><th>${t}</th><td><span class="v">${v}${u&&v!=='—'?' '+u:''}</span>${i?`<span class="i">${esc(i)}</span>`:''}<span class="i">${form}</span></td></tr>`;
+  if(L) L.innerHTML=`<table>
+  ${row('Anyon açığı',f1(R.ag),'mmol/L',I.ag,'Na⁺ − (Cl⁻ + HCO₃⁻)')}
+  ${row('Albüminle düzeltilmiş anyon açığı',f1(R.agc),'mmol/L','','AA + 2,5 × (4 − albümin)')}
+  ${row('Delta oranı',f2(R.dr),'',I.dr,'(AA − 12) / (24 − HCO₃⁻); AA > 12 ve HCO₃⁻ < 24 iken')}
+  ${row('Beklenen pCO₂ (Winter)',R.win==null?'—':f1(R.win)+' ± 2','mmHg',I.win,'1,5 × HCO₃⁻ + 8; metabolik asidozda')}
+  ${row('Düzeltilmiş kalsiyum',f1(R.cac),'mg/dL','','Ca + 0,8 × (4 − albümin); şüphede iyonize Ca ölçün')}
+  ${row('Hesaplanan osmolalite',f1(R.osmc),'mOsm/kg','','2 × Na⁺ + glukoz/18 + üre/6')}
+  ${row('Osmolal açık',f1(R.og),'mOsm/kg',I.og,'Ölçülen − hesaplanan')}
+  ${row('Glukozla düzeltilmiş Na⁺',f1(R.nac),'mmol/L','','Na⁺ + 1,6 × (glukoz − 100)/100; glukoz > 400 mg/dL ise 2,4 katsayısı önerilir')}
+  ${row('FENa',R.fena==null?'—':'%'+f2(R.fena),'',I.fena,'(idrar Na × plazma Cr) / (plazma Na × idrar Cr) × 100')}
+  ${row('FEÜre',R.feure==null?'—':'%'+f1(R.feure),'',I.feure,'(idrar üre × plazma Cr) / (plazma üre × idrar Cr) × 100')}
+  ${row('BUN',f1(R.bun),'mg/dL','','Üre / 2,14')}
+  ${row('eGFR (CKD-EPI 2021, kreatinin)',f1(R.egfr),'mL/dk/1,73 m²',R.egfr!=null&&K.st?'ABH sürerken geçerli değildir':'','Yaş ve cinsiyet Bölüm 0\'dan alınır')}
+  </table>`;
+  return {K,R,I};
+}
+
+// ---- red flags & progress
+function rfList(){ return [...form.querySelectorAll('input[data-rf]:checked')].map(x=>FIELDS[x.id].def.l); }
+function renderRF(){
+  const L=rfList(), sum=$('#rfsum'), bar=$('#alertbar');
+  if(L.length){ sum.className='rfsum on'; sum.innerHTML=`<span>${L.length} kırmızı bayrak işaretli → sorumlu uzmanı hemen arayın.</span>`; bar.hidden=false; $('#alertlist').textContent=L.map(x=>x.split(':')[0]).join(' · '); $('#rf_none').checked=false; $('#rfnonewrap').hidden=true; }
+  else { sum.className='rfsum off'; sum.innerHTML='<span>İşaretli kırmızı bayrak yok.</span>'; bar.hidden=true; $('#rfnonewrap').hidden=false; }
+}
+function reqIds(){ return Object.keys(FIELDS).filter(id=>FIELDS[id].def.req); }
+function missingList(){
+  const miss=[];
+  reqIds().forEach(id=>{ const el=document.getElementById(id); if(!el||!visible(el)) return; if(!filled(id)) miss.push(id); });
+  if(!rfList().length && !val('rf_none')) miss.unshift('rf_none');
+  return miss;
+}
+function renderProgress(){
+  const miss=new Set(missingList());
+  C.sections.forEach(s=>{
+    const ids=Object.keys(FIELDS).filter(id=>FIELDS[id].sec===s && (FIELDS[id].def.req||id==='rf_none'));
+    const any=Object.keys(FIELDS).some(id=>FIELDS[id].sec===s&&filled(id));
+    const dot=document.querySelector(`nav.rail a[data-sec="${s.id}"] .dot`); if(!dot) return;
+    dot.className='dot'+(s.id==='s1'&&rfList().length?' alert':(ids.length&&ids.every(i=>!miss.has(i))&&any?' done':(any?' part':'')));
+  });
+  const total=reqIds().length+1; $('#prog').textContent=`Zorunlu alan: ${total-miss.size}/${total}`;
+}
+
+// ---- note
+function lineFor(id){
+  const d=FIELDS[id].def, v=val(id);
+  if(Array.isArray(v)) return v.length?(d.l?`${d.l}: `:'')+v.join('; '):null;
+  if(typeof v==='boolean') return v?(d.l):null;
+  if(!v) return null;
+  const vv=d.t==='num'?String(v).replace('.',','):v;
+  if(!d.l) return `${vv}`;
+  return d.u==='%'?`${d.l}: %${vv}`:`${d.l}: ${vv}${d.u?' '+d.u:''}`;
+}
+function buildNote(){
+  const {K,R,I}=renderCalcs(); const out=[];
+  const g=id=>val(id);
+  out.push('NEFROLOJİ KONSÜLTASYON NOTU');
+  out.push(`Danışan birim: ${g('birim')||'—'}${g('servisadi')?' ('+g('servisadi')+')':''}${g('isteyen')?' · '+g('isteyen'):''}`);
+  out.push(`Konsültasyon nedeni: ${(g('neden')||[]).join('; ')||'—'}`);
+  if(g('soru')) out.push(`İsteyen ekibin sorusu: ${g('soru')}`);
+  out.push(`Protokol: ${g('protokol')||'—'} | ${g('yas')||'—'} yaş, ${g('cins')||'—'}`);
+  out.push(`İstem: ${g('istemzaman')||'—'}${g('istenenaciliyet')?' ('+g('istenenaciliyet').toLocaleLowerCase('tr')+')':''} | Değerlendirme: ${g('degzaman')||'—'} | Belirlenen aciliyet: ${g('belirlenenaciliyet')||'—'}`);
+  out.push('');
+  const rf=rfList();
+  out.push('KIRMIZI BAYRAK TARAMASI: '+(rf.length?rf.length+' bulgu':(g('rf_none')?'Saptanmadı':'Taranmadı')));
+  rf.forEach(x=>out.push('  ! '+x));
+  if(g('uzmanaranma')) out.push('  Uzmana bildirim: '+g('uzmanaranma'));
+  const skip=new Set(['neden','soru','protokol','yas','cins','birim','servisadi','isteyen','istemzaman','degzaman','istenenaciliyet','belirlenenaciliyet','asistan','uzman','uzmanaranma','rf_none','uzmanonay','onayzaman']);
+  C.sections.slice(2).forEach(s=>{
+    const lines=[];
+    s.groups.forEach(gr=>{
+      const grpEl=[...document.querySelectorAll(`#${s.id} .grp`)].find(e=>e.querySelector('h3')?.textContent===gr.g);
+      gr.f.forEach(f=>{
+        if(f.t==='dx'){ if(g(f.id)) lines.push(`  ${f.l}. ${g(f.id)}${g(f.id+'_p')?' (olasılık: '+g(f.id+'_p').toLocaleLowerCase('tr')+')':''}${g(f.id+'_d')?' — '+g(f.id+'_d'):''}`); return; }
+        if(f.t==='calc'){
+          if(f.k==='kdigo'&&K.any) lines.push('  KDIGO ABH evresi: '+(K.st?`Evre ${K.st} (${K.why.join(', ')})`:'ölçüt karşılanmıyor'));
+          if(f.k==='lab'){
+            const c=[]; if(R.ag!=null)c.push(`AA ${f1(R.ag)}${R.agc!=null?' (düzeltilmiş '+f1(R.agc)+')':''}`);
+            if(R.dr!=null)c.push(`delta oranı ${f2(R.dr)}`); if(R.win!=null)c.push(`beklenen pCO₂ ${f1(R.win)}±2 (${I.win})`);
+            if(R.cac!=null)c.push(`düzeltilmiş Ca ${f1(R.cac)} mg/dL`); if(R.og!=null)c.push(`osmolal açık ${f1(R.og)}`);
+            if(R.nac!=null)c.push(`düzeltilmiş Na⁺ ${f1(R.nac)}`); if(R.fena!=null)c.push(`FENa %${f2(R.fena)}`); if(R.feure!=null)c.push(`FEÜre %${f1(R.feure)}`);
+            if(R.egfr!=null)c.push(`eGFR ${f1(R.egfr)} mL/dk/1,73 m²${K.st?' (ABH’de geçersiz)':''}`);
+            if(c.length) lines.push('  Hesaplanan: '+c.join('; '));
+          }
+          return; }
+        if(!f.id||skip.has(f.id)) return;
+        const el=document.getElementById(f.id); if(!el||!visible(el)) return;
+        let ln=lineFor(f.id); if(!ln) return;
+        if(!f.l && gr.g) ln=`${gr.g}: ${ln}`;
+        lines.push('  '+ln.replace(/^: /,''));
+      });
+    });
+    if(lines.length){ out.push(''); out.push(`${s.n}. ${s.title.toLocaleUpperCase('tr')}`); out.push(...lines); }
+  });
+  out.push('');
+  out.push(`Değerlendiren: ${g('asistan')||'—'} | Sorumlu uzman: ${g('uzman')||'—'}${g('uzmanonay')?' (görüşüldü'+(g('onayzaman')?'; '+g('onayzaman'):'')+')':' (görüşülmedi)'}`);
+  $('#note').value=out.join('\n');
+  const miss=missingList();
+  $('#missing').innerHTML=miss.length?`<div class="missing"><b>Eksik zorunlu alan (${miss.length}):</b> ${miss.map(id=>`<a href="#${id}" data-focus="${id}">${esc(FIELDS[id].def.l||id)}</a>`).join(', ')}. Not yine de oluşturuldu; eksikleri tamamlayıp yeniden oluşturun.</div>`:'';
+  $('#out').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+$('#missing').addEventListener('click',e=>{const a=e.target.closest('a[data-focus]'); if(!a) return; e.preventDefault(); const el=document.getElementById(a.dataset.focus); el.scrollIntoView({block:'center'}); setTimeout(()=>el.focus({preventScroll:true}),300);});
+
+function toast(t){const el=$('#toast'); el.textContent=t; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,2200);}
+$('#btnBuild').onclick=buildNote;
+$('#btnCopy').onclick=()=>{ if(!$('#note').value) buildNote(); const t=$('#note').value;
+  const fallback=()=>{const n=$('#note'); n.focus(); n.select(); toast('Not seçildi; kopyalamak için Ctrl+C / uzun basın.');};
+  try{ navigator.clipboard.writeText(t).then(()=>toast('Not panoya kopyalandı'),fallback);}catch(e){fallback();} };
+function clearAll(){ form.reset(); form.querySelectorAll('input[type=checkbox]').forEach(x=>x.checked=false); $('#note').value=''; $('#wsnote').value=''; $('#wsLink').href='https://wa.me/'; $('#ws_prot').checked=false; $('#missing').innerHTML=''; $('#sampleflag').hidden=true; refresh(); }
+function clearHandler(){ const w=$('#clearWrap'); w.innerHTML='<span class="confirm">Tüm veriler silinsin mi? <button type="button" class="danger" id="cy">Sil</button><button type="button" class="ghost" id="cn">Vazgeç</button></span>';
+  $('#cy').onclick=()=>{clearAll(); resetClear(); toast('Form temizlendi');}; $('#cn').onclick=resetClear; }
+function resetClear(){ const w=$('#clearWrap'); w.innerHTML='<button type="button" class="ghost danger" id="btnClear"><span class="lg">Formu temizle</span><span class="sm">Temizle</span></button>'; $('#btnClear').onclick=clearHandler; }
+$('#btnClear').onclick=clearHandler;
+
+const SAMPLE={protokol:'ÖRNEK-0001',yas:72,cins:'Erkek',birim:'Servis',servistipi:'Genel cerrahi',servisadi:'Genel Cerrahi 2',isteyen:'Dr. (örnek)',istemzaman:'21.10.2026 08:40',degzaman:'21.10.2026 09:15',istenenaciliyet:'Öncelikli',belirlenenaciliyet:'Öncelikli',asistan:'Dr. (örnek asistan)',uzman:'Dr. (örnek uzman)',
+ rf_none:true, neden:['ABH / kreatinin yüksekliği'], soru:'Kolon rezeksiyonu sonrası 2. gün kreatinin 1,0’dan 2,3 mg/dL’ye yükseldi, idrar azaldı. Etiyoloji ve RRT gereksinimi?',
+ kategori:'KBH (diyaliz dışı)',bazalcr:'1,0 · 08.2026',kbhevre:'G3a A1 · hipertansif nefroskleroz',sikayet:'Postoperatif idrar azlığı',yatistarih:'18.10.2026',yatis:'Sigmoid kolon tümörü',oyku:'19.10 sigmoid rezeksiyon. Peroperatif 40 dk hipotansiyon (OAB 55–60). Postoperatif ketorolak 3×30 mg. 20.10 akşamdan beri idrar azaldı.',
+ hastaneici:['Cerrahi / anestezi','Hipotansiyon atağı','Nefrotoksik ilaç'],volumkayip:['Dren / fistül kaybı','Ağızdan alım azlığı'],aldicikar:'Aldığı 1800 / çıkardığı 650 mL (dren 300)',hipervolemi:['Yok'],idrarmiktar:'Son 12 saatte 180 mL (sondalı)',idrarbulgu:['Yok'],obstruksiyon:['Prostat hastalığı'],
+ nefrotoksin:['NSAİİ / COX-2 inhibitörü','ACEİ / ARB / ARNİ'],sistemik:['Hipertansiyon'],ozgecmis:'Hipertansiyon, BPH',ilaclar:'Ramipril 5 mg (devam ediyor), tamsulosin 0,4 mg, ketorolak 3×30 mg IV',islevsellik:'Bağımsız',
+ cr_bazal:'1,0',cr_simdi:'2,3',cr_48:'1,1',uo_hiz:'0,2',uo_sure:12,ta:'104/62',nabiz:108,ss:20,spo2:96,ates:37.6,kilo:78,bilinc:'Açık, koopere',hipovolemibulgu:['Taşikardi','Kuru mukoza'],hipervolemibulgu:['Yok'],pocus:'VCI 1,1 cm, >%50 kollaps · B-çizgisi yok · hidronefroz yok · mesane 60 mL',volumsonuc:'Hipovolemik',
+ l_ure:118,l_cr:2.3,l_na:136,l_k:'5,4',l_hemogram:'Hb 11,2 · Lök 12,4 · Plt 210',l_cl:104,l_hco3:19,l_ph:7.31,l_pco2:38,l_glu:142,l_alb:3.2,l_ca:8.4,l_osm:300,u_na:48,u_cr:62,u_ure:410,sediment:['Kirli-kahverengi granüler silendir / RTE hücresi (ATN)'],tit:'Dansite 1012 · protein eser · kan (–)',
+ usg:'Sağ 10,6 cm, sol 10,9 cm · parankim ekojenitesi normal · hidronefroz yok',ekg:'Sinüs taşikardisi, hiperkalemi bulgusu yok',
+ tablo:'KBH zemininde ABH',etiyoloji:['Prerenal / hemodinamik (hipovolemi, KY, siroz, ilaç)','Renal: ATN (iskemik / toksik / septik)','Çok etkenli'],
+ dx1:'İskemik + NSAİİ ilişkili ATN (KBH zemininde)',dx1_p:'Yüksek',dx1_d:'Peroperatif hipotansiyon, ketorolak, granüler silendir, FENa > %1',dx2:'Hipovolemiye bağlı prerenal ABH',dx2_p:'Orta',dx2_d:'Taşikardi, VCI kollapsı, dren kaybı',dx3:'Postrenal (BPH)',dx3_p:'Düşük',dx3_d:'Sondalı, USG’de hidronefroz yok',dxkat:['ATN: iskemik / septik','ATN: nefrotoksik (ilaç, kontrast)','Prerenal / hipovolemi'],
+ rrtolasilik:'Orta',o_acil:'Ketorolak kesildi. Ramipril ara verildi. 500 mL dengeli kristaloid 30 dk; sonrasında VCI ve idrar yeniden değerlendirilecek.',o_sivi:['Volüm replasmanı (dengeli kristaloid tercih)','Aldığı-çıkardığı takibi','Saatlik idrar takibi','Günlük tartı'],
+ o_ilac_kes:'Ketorolak, ramipril',o_ilac_doz:'Antibiyotik dozunu eczacıyla birlikte ABH’ye göre gözden geçirin',o_k:['K⁺ içeren sıvı ve ilaçları kes'],o_rrt:'Endikasyon yok; yakın izlem',o_izlem:'Kreatinin, elektrolit, kan gazı 12 saatte bir',o_yeniden:'Bu akşam 18:00 · K⁺ ≥ 6,0 veya idrar < 0,3 mL/kg/sa 6 saat olursa hemen',o_haber:'K⁺ ≥ 6,0 · SpO₂ < %92 · idrar < 0,3 mL/kg/sa 6 saat',
+ o_taburcu:['ABH sonrası 3 ay içinde kreatinin, eGFR ve UACR kontrolü','Nefroloji polikliniği randevusu','Kesilen ilaçların yeniden başlanma planı'],o_yanit:'KBH zemininde, iskemik ve NSAİİ katkılı ATN ön planda; hipovolemi eşlik ediyor. Şu an RRT endikasyonu yok.',o_iletisim:['İsteyen hekimle sözlü görüşüldü','Hasta / yakını bilgilendirildi'],o_sonuc:'Nefroloji izlemi sürecek (günlük)',uzmanonay:true,onayzaman:'09:50',uzmansoru:'Ramipril kesildi, NSAİİ kesildi; 12 saatlik izlem planı uygun mu?'};
+function fill(data){
+  clearAll();
+  Object.entries(data).forEach(([id,v])=>{
+    if(Array.isArray(v)){ form.querySelectorAll(`input[name="${id}"]`).forEach(x=>x.checked=v.includes(x.value)); return; }
+    const el=document.getElementById(id); if(!el) return;
+    if(el.type==='checkbox') el.checked=!!v; else el.value=v;
+  });
+  $('#sampleflag').hidden=false; refresh(); toast('Örnek hasta yüklendi');
+}
+$('#btnSample').onclick=()=>fill(SAMPLE);
+
+
+// ---- WhatsApp summary
+const cut=(s,n)=>{s=String(s||'').replace(/\s+/g,' ').trim(); return s.length>n?s.slice(0,n-1)+'…':s;};
+function buildWs(){
+  const {K,R}=renderCalcs(); const g=id=>val(id); const L=[];
+  const birim=[g('birim'),g('servisadi')].filter(Boolean).join(' – ');
+  L.push(`*NEFROLOJİ KONSÜLTASYONU* · ${birim||'birim ?'}${g('belirlenenaciliyet')?' · '+g('belirlenenaciliyet').toLocaleUpperCase('tr'):''}`);
+  const kim=[g('yas')?g('yas')+' y':'',g('cins')?(g('cins')==='Kadın'?'K':'E'):'',$('#ws_prot').checked&&g('protokol')?'Prot: '+g('protokol'):''].filter(Boolean).join(' · ');
+  if(kim) L.push(kim);
+  const rf=rfList();
+  L.push(rf.length?`*KIRMIZI BAYRAK (${rf.length}):* `+rf.map(x=>x.split(':')[0]).join('; '):(g('rf_none')?'Kırmızı bayrak: yok':'Kırmızı bayrak: TARANMADI'));
+  if((g('neden')||[]).length) L.push('*Neden:* '+g('neden').join(', '));
+  if(g('soru')) L.push('*Soru:* '+cut(g('soru'),220));
+  const kat=[g('kategori'),g('bazalcr')?'bazal Cr '+g('bazalcr'):''].filter(Boolean).join(' · ');
+  if(kat) L.push('*Zemin:* '+kat);
+  const b=[];
+  if(K.any&&K.st) b.push(`KDIGO evre ${K.st}`+(K.ratio?` (Cr ${f2(K.ratio)} kat)`:''));
+  if(g('idrarmiktar')) b.push('İdrar: '+cut(g('idrarmiktar'),60));
+  if(g('volumsonuc')) b.push(g('volumsonuc'));
+  if(g('ta')) b.push('KB '+g('ta'));
+  if(num('spo2')!=null) b.push('SpO₂ %'+String(num('spo2')).replace('.',','));
+  if(b.length) L.push('*Klinik:* '+b.join(' · '));
+  const SH={l_ure:'Üre',l_cr:'Cr',l_na:'Na',l_k:'K',l_cl:'Cl',l_hco3:'HCO₃',l_ph:'pH',l_pco2:'pCO₂',l_laktat:'Laktat',l_glu:'Glu',l_alb:'Alb',l_ca:'Ca',l_ica:'iCa',l_p:'P',l_mg:'Mg',l_urik:'Ürik',l_osm:'Osm',l_ck:'CK',u_na:'İdrar Na',u_cr:'İdrar Cr',u_ure:'İdrar üre',u_osm:'İdrar osm'};
+  const lab=Object.entries(SH).map(([id,lb])=>{const v=num(id); return v==null?null:`${lb} ${String(v).replace('.',',')}`;}).filter(Boolean);
+  if(lab.length) L.push('*Lab:* '+lab.join(' · '));
+  const lt=[]; if(g('l_hemogram')) lt.push('Hemogram: '+cut(g('l_hemogram'),80)); if(g('l_diger')) lt.push(cut(g('l_diger'),120)); if(g('tit')) lt.push('TİT: '+cut(g('tit'),80)); if(g('upcr')) lt.push('UPCR/UACR: '+cut(g('upcr'),40));
+  if(lt.length) L.push(lt.join(' · '));
+  if((g('sediment')||[]).length) L.push('*Sediment:* '+g('sediment').map(x=>x.split('(')[0].trim()).join(', '));
+  const hc=[]; if(R.ag!=null) hc.push(`AA ${f1(R.agc??R.ag)}${R.agc!=null?' (alb. düz.)':''}`); if(R.dr!=null) hc.push(`delta ${f2(R.dr)}`); if(R.cac!=null) hc.push(`düz. Ca ${f1(R.cac)}`); if(R.og!=null) hc.push(`osm. açık ${f1(R.og)}`); if(R.fena!=null) hc.push(`FENa %${f2(R.fena)}`); if(R.feure!=null) hc.push(`FEÜre %${f1(R.feure)}`); if(R.egfr!=null && !K.st) hc.push(`eGFR ${f1(R.egfr)}`);
+  if(hc.length) L.push('*Hesaplanan:* '+hc.join(' · '));
+  const im=[]; if(g('usg')) im.push('USG: '+cut(g('usg'),100)); if(g('ekg')) im.push('EKG: '+cut(g('ekg'),80)); if(g('akcgrafi')) im.push('AC: '+cut(g('akcgrafi'),60));
+  if(im.length) L.push('*Görüntüleme:* '+im.join(' · '));
+  const dx=['dx1','dx2','dx3'].filter(d=>g(d)).map((d,i)=>`${i+1}) ${g(d)}${g(d+'_p')?' ('+g(d+'_p').toLocaleLowerCase('tr')+')':''}`);
+  if(dx.length) L.push('*Ön tanı:* '+dx.join(' '));
+  const o=[];
+  if(g('o_acil')) o.push(cut(g('o_acil'),200));
+  if(g('o_ilac_kes')) o.push('Kes: '+cut(g('o_ilac_kes'),80));
+  if(g('o_rrt')) o.push('RRT: '+g('o_rrt'));
+  if(g('o_yeniden')) o.push('Yeniden değ.: '+cut(g('o_yeniden'),80));
+  if(o.length) L.push('*Öneri:* '+o.join(' | '));
+  if(g('uzmansoru')) L.push('*Hocam, onayınıza:* '+cut(g('uzmansoru'),200));
+  L.push('— '+(g('asistan')||'asistan')+(g('degzaman')?' · '+g('degzaman'):''));
+  const txt=L.join('\n'); $('#wsnote').value=txt;
+  $('#wsLink').href='https://wa.me/?text='+encodeURIComponent(txt);
+  $('#wsout').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  return txt;
+}
+$('#btnWs').onclick=buildWs;
+$('#ws_prot').addEventListener('change',()=>{ if($('#wsnote').value) buildWs(); });
+$('#btnWsCopy').onclick=()=>{ const t=$('#wsnote').value||buildWs();
+  const fb=()=>{const n=$('#wsnote'); n.focus(); n.select(); toast('Özet seçildi; kopyalamak için Ctrl+C / uzun basın.');};
+  try{ navigator.clipboard.writeText(t).then(()=>toast('Özet panoya kopyalandı'),fb);}catch(e){fb();} };
+
+function markBad(){ form.querySelectorAll('input[data-num]').forEach(el=>{ const bad=el.value.trim()!=='' && num(el.id)==null; el.classList.toggle('bad',bad); el.title=bad?'Sayı girin (örn. 2,3)':''; }); }
+function refresh(){ markBad(); applyShow(); renderRF(); renderCalcs(); renderProgress(); }
+form.addEventListener('input',refresh); form.addEventListener('change',refresh);
+form.addEventListener('submit',e=>e.preventDefault());
+refresh();
+</script>
+
+<script>
+// ---- PWA: service worker, update notice, install hint
+(function(){
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const ua = navigator.userAgent; const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in document);
+  let dismissed=false; try{ dismissed = localStorage.getItem('nk_install_dismissed')==='1'; }catch(e){}
+  const hint=document.getElementById('installHint'), txt=document.getElementById('installText');
+  let deferred=null;
+  function show(html){ if(standalone||dismissed) return; txt.innerHTML=html; hint.hidden=false; }
+  if(ios) show('<b>Telefona kurun:</b> Safari’de alttaki Paylaş düğmesine dokunun → <b>Ana Ekrana Ekle</b>. Uygulama simgesiyle ve internetsiz açılır.');
+  window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferred=e;
+    show('<b>Telefona kurun:</b> <button type="button" class="pri" id="installBtn" style="margin:0 6px">Uygulamayı yükle</button> ya da tarayıcı menüsünden <b>Ana ekrana ekle</b>.');
+    const b=document.getElementById('installBtn'); if(b) b.onclick=async()=>{ deferred.prompt(); await deferred.userChoice; hint.hidden=true; };
+  });
+  if(!ios && !standalone) setTimeout(()=>{ if(hint.hidden) show('<b>Telefona kurun:</b> Chrome menüsünden (⋮) <b>Ana ekrana ekle</b> veya <b>Uygulamayı yükle</b>.'); }, 2500);
+  document.getElementById('installClose').onclick=()=>{ hint.hidden=true; try{ localStorage.setItem('nk_install_dismissed','1'); }catch(e){} };
+
+  if('serviceWorker' in navigator && location.protocol !== 'file:'){
+    navigator.serviceWorker.register('sw.js').then(reg=>{
+      reg.addEventListener('updatefound', ()=>{ const w=reg.installing; if(!w) return;
+        w.addEventListener('statechange', ()=>{ if(w.state==='installed' && navigator.serviceWorker.controller){
+          const t=document.getElementById('toast'); t.innerHTML='Yeni sürüm hazır. <button type="button" id="upd" style="margin-left:8px;padding:3px 10px">Yenile</button>'; t.hidden=false;
+          document.getElementById('upd').onclick=()=>{ w.postMessage('skipWaiting'); };
+        }});
+      });
+      setInterval(()=>reg.update().catch(()=>{}), 60*60*1000);
+    }).catch(()=>{});
+    let reloaded=false;
+    navigator.serviceWorker.addEventListener('controllerchange', ()=>{ if(reloaded) return; reloaded=true; location.reload(); });
+  }
+})();
+</script>
+</body>
+</html>

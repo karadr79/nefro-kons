@@ -1,0 +1,37 @@
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.1.0
+RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
+
+KLASÖRDEKİ DOSYALAR
+  index.html             Uygulamanın kendisi (form)
+  manifest.webmanifest   Uygulama adı, simgesi, renkleri
+  sw.js                  Çevrimdışı çalışmayı sağlar (yalnızca uygulama dosyalarını saklar; form verisini saklamaz)
+  *.png                  Uygulama simgeleri
+Bu dosyaların hepsi birlikte, aynı klasöre yüklenmelidir.
+
+A. GITHUB PAGES'TE YAYIMLAMA (ücretsiz, bir kez)
+  1. github.com adresinde ücretsiz hesap açın.
+  2. Sağ üstteki "+" → "New repository". Ad: nefro-kons · "Public" seçili · "Create repository".
+  3. Açılan sayfada "uploading an existing file" bağlantısına tıklayın.
+  4. ZIP'ten çıkardığınız klasörün İÇİNDEKİ her şeyi (tüm dosyalar)
+     sayfaya sürükleyin. Altta "Commit changes" düğmesine basın.
+  5. "Settings" → soldaki "Pages" → "Source: Deploy from a branch" → Branch: "main", klasör: "/ (root)" → "Save".
+  6. 1–2 dakika sonra uygulama şu adreste açılır:
+        https://KULLANICI-ADINIZ.github.io/nefro-kons/
+     Bu adresi WhatsApp grubuna gönderin ve mesajı sabitleyin.
+
+B. TELEFONA KURMA (her asistan, bir kez)
+  iPhone : Adresi SAFARI ile açın → alttaki Paylaş düğmesi → "Ana Ekrana Ekle" → "Ekle".
+  Android: Adresi CHROME ile açın → sağ üstteki ⋮ menüsü → "Uygulamayı yükle" veya "Ana ekrana ekle".
+  Simge "Nefro Kons" adıyla ana ekrana gelir; tam ekran ve internet olmadan açılır.
+
+C. GÜNCELLEME
+  Yeni sürüm geldiğinde GitHub'daki depoda "Add file" → "Upload files" ile aynı adlı dosyaları yükleyip
+  "Commit changes" deyin (eskilerin üzerine yazılır). Telefonlar internete bağlandığında yeni sürümü indirir;
+  ekranda "Yeni sürüm hazır · Yenile" uyarısı görünür.
+
+D. KULLANIM KURALLARI
+  - Hasta adı yazılmaz. Kayıt yalnızca HBYS'dedir: "Not oluştur" → "Kopyala" → HBYS'ye yapıştır.
+  - Kırmızı bayrak varsa uzman TELEFONLA aranır; WhatsApp özeti aramanın yerini tutmaz.
+  - Uygulama form verisini saklamaz. iPhone'da uygulama uzun süre arka planda kalırsa yeniden açılabilir ve girilen
+    veriler silinir; notu HBYS'ye aktarmadan başka işe geçmeyin.
+  - Bu klasörde hasta verisi yoktur; depo herkese açık olabilir.
