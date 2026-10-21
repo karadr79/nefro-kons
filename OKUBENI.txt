@@ -1,4 +1,4 @@
-NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.1.0
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.2.0
 RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
 
 KLASÖRDEKİ DOSYALAR
