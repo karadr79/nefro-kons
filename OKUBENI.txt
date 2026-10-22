@@ -40,3 +40,8 @@ E. NEFRO ARAÇLAR
   Başlıktaki "Hesap araçları" düğmesi https://karadr79.github.io/NefroHesapAraclar/ uygulamasını açar.
   Formdaki yaş, cinsiyet, kilo ve kreatinin değerleri bağlantının # kısmıyla aktarılır (sunucuya gönderilmez);
   Nefro Araçlar bu değerleri hasta şeridine yazar ve adresten siler.
+
+F. KLİNİK BESLENME REHBERİ
+  Başlıktaki "Klinik beslenme" düğmesi https://karadr79.github.io/KlinikBeslenme/ uygulamasını açar.
+  Formdaki yaş, cinsiyet ve kilo bağlantının # kısmıyla aktarılır (sunucuya gönderilmez); uygulama bunları
+  hasta profiline yazar, adresten siler. Boy ve olağan ağırlık formda olmadığından orada girilir.

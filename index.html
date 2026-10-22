@@ -223,7 +223,7 @@ html{scroll-behavior:smooth}
     <div class="org" id="org"></div>
     <h1 id="ttl"></h1>
     <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.2.2</span></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="kref" id="btnBook" style="font-size:13.5px;padding:6px 12px">El kitabını aç</button><a class="kref" id="btnCalc" href="https://karadr79.github.io/NefroHesapAraclar/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Hesap araçları ↗</a></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="kref" id="btnBook" style="font-size:13.5px;padding:6px 12px">El kitabını aç</button><a class="kref" id="btnCalc" href="https://karadr79.github.io/NefroHesapAraclar/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Hesap araçları ↗</a><a class="kref" id="btnNut" href="https://karadr79.github.io/KlinikBeslenme/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Klinik beslenme ↗</a></div>
     <div class="install" id="installHint" hidden>
   <span id="installText"></span>
   <button type="button" class="ghost" id="installClose" aria-label="Kapat">Kapat</button>
@@ -705,6 +705,14 @@ document.getElementById('btnCalc').addEventListener('click',()=>{
   const c=g('cins'), p={yas:n('yas'),cins:c==='Kadın'?'K':c==='Erkek'?'E':'',kilo:n('kilo')||n('kuruagirlik'),kr:n('l_cr')||n('cr_simdi')};
   const q=Object.keys(p).filter(k=>p[k]).map(k=>k+'='+p[k]).join(';');
   document.getElementById('btnCalc').href='https://karadr79.github.io/NefroHesapAraclar/'+(q?'#hasta:'+q:'');
+});
+// Klinik Beslenme Rehberi'ne geçiş: yaş, cinsiyet ve kilo URL parçası (#) ile aktarılır; sunucuya gönderilmez
+document.getElementById('btnNut').addEventListener('click',()=>{
+  const g=id=>{ const r=form.querySelector(`input[name="${id}"]:checked`); if(r) return r.value; const el=document.getElementById(id); return el?String(el.value||'').trim():''; };
+  const n=id=>{ const v=g(id).replace(/\s/g,'').replace(',','.'); return /^\d*\.?\d+$/.test(v)?v:''; };
+  const c=g('cins'), p={yas:n('yas'),cins:c==='Kadın'?'K':c==='Erkek'?'E':'',kilo:n('kilo')||n('kuruagirlik')};
+  const q=Object.keys(p).filter(k=>p[k]).map(k=>k+'='+p[k]).join(';');
+  document.getElementById('btnNut').href='https://karadr79.github.io/KlinikBeslenme/'+(q?'#hasta:'+q:'');
 });
 document.addEventListener('click',e=>{ const k=e.target.closest('button.kref[data-card]'); if(k){ e.preventDefault(); kvCard(k.dataset.card); return; }
   const bk=e.target.closest('#btnBook,[data-book]'); if(bk){ e.preventDefault(); kvIndex(); } });
