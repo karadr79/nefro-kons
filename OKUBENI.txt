@@ -1,4 +1,4 @@
-NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.4.0
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.5.0
 RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
 
 KLASÖRDEKİ DOSYALAR
@@ -60,3 +60,12 @@ H. 1.4.0 KARAR DESTEĞİ
   internetsiz çalışır, hiçbir veri dışarı gönderilmez. Her öneride tetikleyen veri, kaynak ve kanıt türü yazar.
   "Kabul" öneriyi ilgili öneri alanına ekler; "Reddet" gerekçe ister. Kabul/ret ve yanıtlanmayanlar HBYS notuna,
   özeti WhatsApp mesajına girer. Öneriler kılavuz hatırlatmasıdır; son karar sorumlu uzmanındır.
+
+I. 1.5.0 YENİLİKLER
+  İzlem notu: Triyaj adımında "Konsültasyon tipi → İzlem notu". Yalnızca son 24 saat, muayene, laboratuvar,
+  karar desteği ve plan görünür; not "NEFROLOJİ İZLEM NOTU" başlığıyla kısa çıkar. Kırmızı bayrak taraması izlemde de zorunlu.
+  Taslak koruma (isteğe bağlı, varsayılan kapalı): "Bu telefonda taslak tut". Veriler yalnızca o cihazda, şifreli
+  tutulur; 12 saat sonra ya da "Formu temizle" ile silinir. Koruma telefonun ekran kilidine dayanır.
+  Hızlı başlangıç şablonları (8): nedeni ve kategoriyi seçer, beklenen bilgileri hatırlatır; klinik değer doldurmaz.
+  Eğitim vakaları (10, kurgusal): "Kullanım ve örnek hasta" altında. Formu doldurup "Karşılaştır" ile puan ve model çözüm.
+  WhatsApp özetinin sonunda uzman yanıt satırı. Başlıktaki "Geri bildirim ✉" hazır şablonlu e-posta açar.
