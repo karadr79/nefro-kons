@@ -1,4 +1,4 @@
-NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.3.0
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.4.0
 RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
 
 KLASÖRDEKİ DOSYALAR
@@ -54,3 +54,9 @@ G. 1.3.0 İLE GELEN DÜZEN (4 ADIM)
   Kırmızı bayrak taraması bitmeden (en az bir bayrak ya da "kırmızı bayrak yok") Triyaj'dan çıkılamaz.
   Varsayılan hızlı moddur; ayrıntılı alanlar için "Tümünü göster". Gizli alanlardaki veriler de nota girer.
   Rozetler: ✓ tamam · ! eksik zorunlu alan. ⓘ açıklamayı açar; bölüm başlığına dokunmak bölümü daraltır.
+
+H. 1.4.0 KARAR DESTEĞİ
+  3. adımın (Karar) başında "Kanıta dayalı öneriler" paneli: 44 kural, formdaki verilere göre otomatik tetiklenir,
+  internetsiz çalışır, hiçbir veri dışarı gönderilmez. Her öneride tetikleyen veri, kaynak ve kanıt türü yazar.
+  "Kabul" öneriyi ilgili öneri alanına ekler; "Reddet" gerekçe ister. Kabul/ret ve yanıtlanmayanlar HBYS notuna,
+  özeti WhatsApp mesajına girer. Öneriler kılavuz hatırlatmasıdır; son karar sorumlu uzmanındır.
