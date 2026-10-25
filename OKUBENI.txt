@@ -1,10 +1,13 @@
-NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.2.2
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.3.0
 RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
 
 KLASÖRDEKİ DOSYALAR
   index.html             Uygulamanın kendisi (form)
   manifest.webmanifest   Uygulama adı, simgesi, renkleri
   sw.js                  Çevrimdışı çalışmayı sağlar (yalnızca uygulama dosyalarını saklar; form verisini saklamaz)
+  kartlar.js             Gömülü el kitabı kartları
+  fonts/                 Yerel yazı tipleri (Atkinson Hyperlegible, OFL lisanslı)
+  LICENSE                Lisans (CC BY-NC-ND 4.0)
   *.png                  Uygulama simgeleri
 Bu dosyaların hepsi birlikte, aynı klasöre yüklenmelidir.
 
@@ -45,3 +48,9 @@ F. KLİNİK BESLENME REHBERİ
   Başlıktaki "Klinik beslenme" düğmesi https://karadr79.github.io/KlinikBeslenme/ uygulamasını açar.
   Formdaki yaş, cinsiyet ve kilo bağlantının # kısmıyla aktarılır (sunucuya gönderilmez); uygulama bunları
   hasta profiline yazar, adresten siler. Boy ve olağan ağırlık formda olmadığından orada girilir.
+
+G. 1.3.0 İLE GELEN DÜZEN (4 ADIM)
+  1 Triyaj → 2 Hasta → 3 Karar → 4 Çıktı. Üstteki sekmeler ya da sayfa sonundaki İleri/Geri ile geçilir.
+  Kırmızı bayrak taraması bitmeden (en az bir bayrak ya da "kırmızı bayrak yok") Triyaj'dan çıkılamaz.
+  Varsayılan hızlı moddur; ayrıntılı alanlar için "Tümünü göster". Gizli alanlardaki veriler de nota girer.
+  Rozetler: ✓ tamam · ! eksik zorunlu alan. ⓘ açıklamayı açar; bölüm başlığına dokunmak bölümü daraltır.
