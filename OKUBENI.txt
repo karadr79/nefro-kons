@@ -1,4 +1,4 @@
-NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.6.0
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.6.1
 RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
 
 KLASÖRDEKİ DOSYALAR
@@ -82,3 +82,7 @@ K. KISA NOT (1.6.0)
   Konsültasyon notu varsayılan olarak kısadır: kimlik ve neden, kırmızı bayrak, zemin, öykü, risk ve ilaçlar,
   bulgular, lab ve anlamlı hesaplamalar, değerlendirme, ön tanı, öneriler, soruya yanıt, imza. Tüm dolu alanları
   içeren uzun not için not alanındaki "Ayrıntılı not" kutusunu işaretleyin.
+
+L. 1.6.1
+  Kısa notta laboratuvar birimleri ve ayrı "SONUÇ VE ÖNERİLER" bölümü. Koyu tema yeniden düzenlendi (bölüm şeritleri,
+  ayrışan başlık bantları, belirgin giriş kutuları). ☰ Menü → TEMA: Sistem / Açık / Koyu seçilebilir.

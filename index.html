@@ -32,27 +32,27 @@ body{margin:0} img{max-width:100%} [hidden]{display:none!important}
   --red:#B42318; --red-soft:#FDECEA; --red-line:#F2B8B2;
   --blue:#1F4E79; --blue-soft:#EAF1F8; --green:#1E6B48; --green-soft:#E7F4EC; --green-line:#B6DCC6;
   --amber:#8A5A00; --amber-soft:#FFF4DC;
-  --chip:#EEF2F6; --chip-on:#1F4E79; --chip-on-ink:#FFFFFF;
+  --chip:#EEF2F6; --chip-on:#1F4E79; --chip-on-ink:#FFFFFF; --field-line:#C9D2DD; --h3:#5A6878; --sec-h:#F4F7FA; --neutral:#7C8DA3;
   --f-body:"Atkinson Hyperlegible Next",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --f-mono:"Atkinson Hyperlegible Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
   --r:8px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0F151C; --sheet:#151D27; --ink:#E6ECF2; --ink-2:#AEB9C6; --ink-3:#8593A3;
-  --line:#2A3746; --line-2:#212C38; --field:#111922;
-  --accent:#8DB8E4; --accent-soft:#1B2B3C;
-  --red:#FF8A7E; --red-soft:#33191A; --red-line:#6A2A27;
-  --blue:#8DB8E4; --blue-soft:#172535; --green:#7FD1A6; --green-soft:#132A20; --green-line:#285040;
-  --amber:#F2C46B; --amber-soft:#2E2412;
-  --chip:#1E2935; --chip-on:#8DB8E4; --chip-on-ink:#0F151C; color-scheme:dark}}
+  --bg:#0A0F15; --sheet:#18222E; --ink:#F0F4F8; --ink-2:#C6D0DB; --ink-3:#97A6B7;
+  --line:#33445A; --line-2:#263343; --field:#0E151D; --field-line:#46596F; --h3:#9CC3EC; --sec-h:#223144; --neutral:#7F9BBB;
+  --accent:#86BBF0; --accent-soft:#1D3550;
+  --red:#FF8F84; --red-soft:#3E1A1A; --red-line:#7A3330;
+  --blue:#86BBF0; --blue-soft:#1A3049; --green:#7DDBA8; --green-soft:#123422; --green-line:#2E6248;
+  --amber:#F5C86E; --amber-soft:#3A2B10;
+  --chip:#223142; --chip-on:#86BBF0; --chip-on-ink:#0A0F15; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0F151C; --sheet:#151D27; --ink:#E6ECF2; --ink-2:#AEB9C6; --ink-3:#8593A3;
-  --line:#2A3746; --line-2:#212C38; --field:#111922;
-  --accent:#8DB8E4; --accent-soft:#1B2B3C;
-  --red:#FF8A7E; --red-soft:#33191A; --red-line:#6A2A27;
-  --blue:#8DB8E4; --blue-soft:#172535; --green:#7FD1A6; --green-soft:#132A20; --green-line:#285040;
-  --amber:#F2C46B; --amber-soft:#2E2412;
-  --chip:#1E2935; --chip-on:#8DB8E4; --chip-on-ink:#0F151C; color-scheme:dark}
+  --bg:#0A0F15; --sheet:#18222E; --ink:#F0F4F8; --ink-2:#C6D0DB; --ink-3:#97A6B7;
+  --line:#33445A; --line-2:#263343; --field:#0E151D; --field-line:#46596F; --h3:#9CC3EC; --sec-h:#223144; --neutral:#7F9BBB;
+  --accent:#86BBF0; --accent-soft:#1D3550;
+  --red:#FF8F84; --red-soft:#3E1A1A; --red-line:#7A3330;
+  --blue:#86BBF0; --blue-soft:#1A3049; --green:#7DDBA8; --green-soft:#123422; --green-line:#2E6248;
+  --amber:#F5C86E; --amber-soft:#3A2B10;
+  --chip:#223142; --chip-on:#86BBF0; --chip-on-ink:#0A0F15; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--sheet)}
@@ -77,7 +77,7 @@ nav.rail .dot.part{background:var(--amber)} nav.rail .dot.done{background:var(--
 .use{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px;margin-bottom:18px}
 .use h2{font-size:14px;margin:0 0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
 .use ol{margin:0;padding-left:20px;display:grid;gap:4px;font-size:14px;color:var(--ink-2)}
-section.sec{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);margin-bottom:18px;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 64px)}
+section.sec{--stripe:var(--line);background:var(--sheet);border:1px solid var(--line);border-left:4px solid var(--stripe);border-radius:var(--r);margin-bottom:18px;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 64px)}
 .sec-h{display:flex;gap:12px;align-items:baseline;padding:14px 18px;border-bottom:1px solid var(--line-2)}
 .sec-h .num{font-family:var(--f-mono);font-weight:600;font-size:14px;color:var(--ink-3);min-width:22px}
 .sec-h h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.005em}
@@ -88,13 +88,13 @@ section.sec{background:var(--sheet);border:1px solid var(--line);border-radius:v
 .sec.red .lead{color:var(--red)}
 .grp{padding:14px 18px;border-top:1px dashed var(--line-2)}
 .grp:first-of-type{border-top:0}
-.grp h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);font-weight:700}
+.grp h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--h3);font-weight:700}
 .fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px 16px}
 .f{display:grid;gap:4px;min-width:0}
 .f.wide{grid-column:1/-1}
 .f label.l{font-size:13.5px;font-weight:700;color:var(--ink-2)}
 .req::after{content:" *";color:var(--red)}
-input[type=text],input[type=number],select,textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-height:40px}
+input[type=text],input[type=number],select,textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--field);border:1px solid var(--field-line);border-radius:6px;padding:8px 10px;min-height:40px}
 textarea{min-height:76px;resize:vertical}
 input:focus,select:focus,textarea:focus,button:focus-visible,.chip:has(input:focus-visible),.ck:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:1px}
 .unit{display:flex;align-items:stretch}
@@ -106,7 +106,7 @@ input:focus,select:focus,textarea:focus,button:focus-visible,.chip:has(input:foc
 .card-ref b{font-weight:700}
 .card-ref i{font-style:normal;border:1px solid var(--accent-soft);background:var(--accent-soft);border-radius:4px;padding:1px 7px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{position:relative;display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--chip);border-radius:999px;padding:6px 12px;font-size:13.5px;cursor:pointer;user-select:none;color:var(--ink)}
+.chip{position:relative;display:inline-flex;align-items:center;border:1px solid var(--field-line);background:var(--chip);border-radius:999px;padding:6px 12px;font-size:13.5px;cursor:pointer;user-select:none;color:var(--ink)}
 .chip input{position:absolute;opacity:0;pointer-events:none}
 .chip:has(input:checked){background:var(--chip-on);border-color:var(--chip-on);color:var(--chip-on-ink)}
 .ck{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:10px 12px;border:1px solid var(--line-2);border-radius:6px;cursor:pointer;background:var(--field)}
@@ -320,6 +320,16 @@ details.hmenu>summary{cursor:pointer;font-weight:800;font-size:14px;color:var(--
 details.hmenu>summary::-webkit-details-marker{display:none}
 details.hmenu>summary span{font-weight:500;color:var(--ink-3);font-size:12.5px}
 .hmin{display:grid;gap:8px;padding-bottom:8px}
+/* ---- tema: bölüm şeritleri ve ayrışma */
+.sec.neutral{--stripe:var(--neutral)} .sec.neutral .sec-h{background:var(--sec-h)}
+.sec.red{--stripe:var(--red)} .sec.blue{--stripe:var(--blue)} .sec.green{--stripe:var(--green)}
+.grp{border-top-color:var(--line)}
+.sec-h .num{color:var(--stripe)}
+.unit span{border-color:var(--field-line)}
+.ck{border-color:var(--field-line)}
+nav.steps{box-shadow:0 1px 0 var(--line)}
+.actions{box-shadow:0 -1px 0 var(--line)}
+.thm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2)}
 .draftask{background:var(--amber-soft);border-radius:8px;padding:10px 12px;font-size:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 </style>
 </head>
@@ -330,7 +340,7 @@ details.hmenu>summary span{font-weight:500;color:var(--ink-3);font-size:12.5px}
   <header class="top">
     <div class="org" id="org"></div>
     <h1 id="ttl"></h1>
-    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.6.0</span></div>
+    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.6.1</span></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="kref" id="btnBook" style="font-size:13.5px;padding:6px 12px">El kitabını aç</button><a class="kref" id="btnCalc" href="https://karadr79.github.io/NefroHesapAraclar/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Hesap araçları ↗</a><a class="kref" id="btnNut" href="https://karadr79.github.io/KlinikBeslenme/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Klinik beslenme ↗</a><a class="kref" id="btnKbh" href="https://karadr79.github.io/KBHRehberi/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">KBH rehberi ↗</a></div>
     <div class="install" id="installHint" hidden>
   <span id="installText"></span>
@@ -919,10 +929,10 @@ document.addEventListener('click',e=>{ const k=e.target.closest('button.kref[dat
 function shortNote(){
   const {K,R,I}=renderCalcs(); const iz=MODE==='iz'; const L=[];
   const vis=id=>{ const e=document.getElementById(id); return !!e&&!e.closest('[hidden]'); };
-  const kdShort=s=>{ Object.keys(KDEC).forEach(k=>{ const d=KDEC[k]; if(d.st==='kabul'&&d.ins) s=s.split(d.ins).join('KD-'+k+': '+KDS_BY[k].t); }); return s; };
+  const kdShort=s=>{ Object.keys(KDEC).forEach(k=>{ const d=KDEC[k]; if(d.st==='kabul'&&d.ins) s=s.split(d.ins).join(d.ins.replace('[KD-'+k+'] ','')+' (KD-'+k+')'); }); return s; };
   const t=id=>{ if(!vis(id)) return ''; const x=val(id); return typeof x==='string'?kdShort(x.trim()):''; };
   const arr=id=>{ if(!vis(id)) return []; const x=val(id); return (Array.isArray(x)?x:[]).filter(s=>s!=='Yok'&&s!=='Normal'); };
-  const nn=(id,lb,u)=>{ const v=num(id); return v==null?'':`${lb} ${String(v).replace('.',',')}${u?' '+u:''}`; };
+  const nn=(id,lb,u)=>{ const v=num(id); if(v==null) return ''; const un=u===undefined?(FIELDS[id]?.def.u||''):u; return un==='%'?`${lb} %${String(v).replace('.',',')}`:`${lb} ${String(v).replace('.',',')}${un?' '+un:''}`; };
   const J=(a,s)=>a.filter(Boolean).join(s||' · ');
   L.push((iz?'NEFROLOJİ İZLEM NOTU':'NEFROLOJİ KONSÜLTASYON NOTU')+(t('degzaman')?' · '+t('degzaman'):''));
   L.push(J(['Protokol: '+(t('protokol')||'—'),J([t('yas')?t('yas')+' yaş':'',t('cins')],' '),J([t('birim'),t('servisadi')],' – ')],' | '));
@@ -945,21 +955,26 @@ function shortNote(){
   if(lab.length||lt.length) L.push('Lab: '+J([lab.join(', '),...lt],' · '));
   if(arr('sediment').length) L.push('Sediment: '+arr('sediment').map(x=>x.split('(')[0].trim()).join(', '));
   const hc=[]; if(K.any) hc.push(K.st?`KDIGO evre ${K.st} (${K.why.join(', ')})`:'KDIGO ölçütü yok');
-  const agv=R.agc??R.ag; if(agv!=null&&agv>12){ hc.push(`AA ${f1(agv)}${R.agc!=null?' (alb. düz.)':''}`); if(R.dr!=null) hc.push(`delta ${f2(R.dr)}`); } const alb=num('l_alb'); if(R.cac!=null&&alb!=null&&alb<3.5) hc.push(`düz. Ca ${f1(R.cac)}`); if(R.og!=null&&R.og>10) hc.push(`osm. açık ${f1(R.og)}`); const glu=num('l_glu'); if(R.nac!=null&&glu!=null&&glu>200) hc.push(`düz. Na ${f1(R.nac)}`); if(R.fena!=null) hc.push(`FENa %${f2(R.fena)}`); if(R.feure!=null) hc.push(`FEÜre %${f1(R.feure)}`); if(R.egfr!=null&&!K.st) hc.push(`eGFR ${f1(R.egfr)}`);
+  const agv=R.agc??R.ag; if(agv!=null&&agv>12){ hc.push(`AA ${f1(agv)} mmol/L${R.agc!=null?' (alb. düz.)':''}`); if(R.dr!=null) hc.push(`delta ${f2(R.dr)}`); } const alb=num('l_alb'); if(R.cac!=null&&alb!=null&&alb<3.5) hc.push(`düz. Ca ${f1(R.cac)} mg/dL`); if(R.og!=null&&R.og>10) hc.push(`osm. açık ${f1(R.og)} mOsm/kg`); const glu=num('l_glu'); if(R.nac!=null&&glu!=null&&glu>200) hc.push(`düz. Na ${f1(R.nac)} mmol/L`); if(R.fena!=null) hc.push(`FENa %${f2(R.fena)}`); if(R.feure!=null) hc.push(`FEÜre %${f1(R.feure)}`); if(R.egfr!=null&&!K.st) hc.push(`eGFR ${f1(R.egfr)} mL/dk/1,73 m²`);
   if(hc.length) L.push('Hesaplanan: '+hc.join(' · '));
   const im=J([t('usg')?'USG: '+t('usg'):'',t('doppler')?'Doppler: '+t('doppler'):'',t('bt')?'BT: '+t('bt'):'',t('akcgrafi')?'AC: '+t('akcgrafi'):'',t('ekg')?'EKG: '+t('ekg'):'',t('eko')?'EKO: '+t('eko'):'']);
   if(im) L.push('Görüntüleme: '+im);
   moduleSummary().forEach(([gn,p])=>L.push(gn+': '+p.join(' · ')));
-  if(iz){ const a=J([t('iz_seyir')?'seyir: '+t('iz_seyir').toLocaleLowerCase('tr'):'',t('iz_deg')]); if(a) L.push('Değerlendirme: '+a); }
+  if(iz){ }
   else { const dx=['dx1','dx2','dx3'].filter(d=>t(d)).map((d,i)=>`${i+1}) ${t(d)}${t(d+'_p')?' ('+t(d+'_p').toLocaleLowerCase('tr')+')':''}`);
     const a=J([t('tablo'),arr('etiyoloji').length?'etiyoloji: '+arr('etiyoloji').map(x=>x.split('(')[0].trim()).join(', '):'']); if(a) L.push('Değerlendirme: '+a); if(dx.length) L.push('Ön tanı: '+dx.join(' '));
     if(t('fst')) L.push('FST: '+t('fst')); }
-  const O=[]; const add=(lb,x)=>{ if(x) O.push('- '+(lb?lb+': ':'')+x); };
-  add('',t('o_acil')); add('Sıvı',J([arr('o_sivi').join(', '),t('o_sivi_detay')],'. ')); add('Kesilecek',t('o_ilac_kes')); add('Doz/düzey',t('o_ilac_doz')); add('K⁺',arr('o_k').join(', '));
-  add('Tetkik',t('o_tetkik')); add('RRT',J([t('o_rrt'),t('o_rrtmod'),t('o_kateter')],' · ')); add('Beslenme',t('o_beslenme')); add('Lab izlem',t('o_izlem')); add('Yeniden değerlendirme',t('o_yeniden')); add('Hemen haber',t('o_haber'));
-  if(O.length){ L.push('Öneriler:'); L.push(...O); }
-  if(t('o_yanit')) L.push('Soruya yanıt: '+t('o_yanit'));
-  if(t('o_sonuc')) L.push('Sonuç: '+t('o_sonuc'));
+  const O=[]; const add=(lb,x)=>{ if(x) O.push((lb?lb+': ':'')+x); };
+  add('',t('o_acil')); add('Sıvı',J([arr('o_sivi').join(', '),t('o_sivi_detay')],'. ')); add('Kesilecek / ara verilecek ilaçlar',t('o_ilac_kes')); add('Doz ayarı ve düzey',t('o_ilac_doz')); add('Potasyum',arr('o_k').join(', '));
+  add('İstenecek tetkikler',t('o_tetkik')); add('RRT',J([t('o_rrt'),t('o_rrtmod'),t('o_kateter')],' · ')); add('Beslenme',t('o_beslenme')); add('Laboratuvar izlemi',t('o_izlem'));
+  add('Nefrolojiye hemen haber verilecek durumlar',t('o_haber')); add('Taburculuk sonrası',arr('o_taburcu').join('; '));
+  const sonuc=iz?J([t('iz_seyir')?'Seyir: '+t('iz_seyir').toLocaleLowerCase('tr'):'',t('iz_deg')],'. '):t('o_yanit');
+  if(sonuc||O.length||t('o_sonuc')||t('o_yeniden')){
+    L.push(''); L.push('SONUÇ VE ÖNERİLER');
+    if(sonuc) L.push((iz?'Sonuç: ':'Soruya yanıt / sonuç: ')+sonuc);
+    O.forEach((x,i)=>L.push(`${i+1}. ${x}`));
+    const iz2=J([t('o_sonuc'),t('o_yeniden')?'yeniden değerlendirme: '+t('o_yeniden'):''],' · '); if(iz2) L.push('İzlem planı: '+iz2);
+  }
   const kd=kdsWsLine().replace(/\*/g,''); if(kd) L.push(kd);
   L.push(`Değerlendiren: ${t('asistan')||'—'} | Uzman: ${t('uzman')||'—'}${val('uzmanonay')?' (görüşüldü'+(t('onayzaman')?'; '+t('onayzaman'):'')+')':' (görüşülmedi)'}`);
   return L.join('\n');
@@ -1342,6 +1357,10 @@ function compactHeader(){
   const links=document.getElementById('btnBook')?.parentElement, pv=hd.querySelector('.privacy'), dr=hd.querySelector('.draft');
   const d=document.createElement('details'); d.className='hmenu'; d.innerHTML='<summary>☰ Menü <span>El kitabı, bağlantılar, gizlilik, taslak</span></summary><div class="hmin"></div>';
   const inn=d.querySelector('.hmin'); [links,pv,dr].forEach(x=>{ if(x) inn.appendChild(x); });
+  inn.insertAdjacentHTML('beforeend','<div class="thm"><b>Tema</b><div class="seg2" id="themeSel" role="group" aria-label="Tema"><button type="button" data-th="">Sistem</button><button type="button" data-th="light">Açık</button><button type="button" data-th="dark">Koyu</button></div></div>');
+  const setTh=v=>{ if(v) document.documentElement.setAttribute('data-theme',v); else document.documentElement.removeAttribute('data-theme'); try{ localStorage.setItem('nk_theme',v); }catch(e){} inn.querySelectorAll('#themeSel button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.th===v?'true':'false')); };
+  let th=''; try{ th=localStorage.getItem('nk_theme')||''; }catch(e){} setTh(th);
+  inn.querySelector('#themeSel').addEventListener('click',e=>{ const b=e.target.closest('button[data-th]'); if(b) setTh(b.dataset.th); });
   const line=document.createElement('div'); line.className='pline'; line.innerHTML='<b>Veri saklanmaz</b> · hasta adı ve kimlik no yazmayın';
   hd.appendChild(line); hd.appendChild(d);
   const ask=document.createElement('div'); ask.id='draftAsk'; ask.className='draftask'; ask.hidden=true; hd.appendChild(ask);
