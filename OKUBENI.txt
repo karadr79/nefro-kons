@@ -1,4 +1,4 @@
-NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.5.0
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.6.0
 RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
 
 KLASÖRDEKİ DOSYALAR
@@ -69,3 +69,16 @@ I. 1.5.0 YENİLİKLER
   Hızlı başlangıç şablonları (8): nedeni ve kategoriyi seçer, beklenen bilgileri hatırlatır; klinik değer doldurmaz.
   Eğitim vakaları (10, kurgusal): "Kullanım ve örnek hasta" altında. Formu doldurup "Karşılaştır" ile puan ve model çözüm.
   WhatsApp özetinin sonunda uzman yanıt satırı. Başlıktaki "Geri bildirim ✉" hazır şablonlu e-posta açar.
+
+J. 1.6.0 GÜVENLİK VE PRATİKLİK
+  Aralık dışı (büyük olasılıkla yanlış birimli) laboratuvar değerleri kırmızı işaretlenir, birim dönüşümü önerilir
+  ve hesaplamalara/karar desteğine alınmaz. Notta T.C. kimlik veya telefon numarası olabilecek sayı görülürse uyarı çıkar.
+  WhatsApp özetinde servis adı ve tarih yer almaz (yalnızca birim tipi ve saat). Sayfa katı içerik güvenlik politikasıyla
+  (CSP) dış bağlantıya kapalıdır. Taslak geri yüklenmeden önce "Bu taslak sizin mi?" diye sorulur.
+  Başlık sadeleşti (☰ Menü), iPhone'da dokununca büyüme sorunu giderildi, dokunma alanları büyütüldü.
+  ÖNEMLİ: Uygulamanın güvenliği GitHub hesabına bağlıdır; hesapta iki adımlı doğrulama açık olmalıdır.
+
+K. KISA NOT (1.6.0)
+  Konsültasyon notu varsayılan olarak kısadır: kimlik ve neden, kırmızı bayrak, zemin, öykü, risk ve ilaçlar,
+  bulgular, lab ve anlamlı hesaplamalar, değerlendirme, ön tanı, öneriler, soruya yanıt, imza. Tüm dolu alanları
+  içeren uzun not için not alanındaki "Ayrıntılı not" kutusunu işaretleyin.
