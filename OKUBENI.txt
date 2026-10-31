@@ -1,4 +1,4 @@
-NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.6.1
+NEFRO KONS — Nefroloji Konsültasyon Formu (PWA) · uygulama 1.6.2
 RTEÜ Tıp Fakültesi · Nefroloji Bilim Dalı
 
 KLASÖRDEKİ DOSYALAR
@@ -86,3 +86,7 @@ K. KISA NOT (1.6.0)
 L. 1.6.1
   Kısa notta laboratuvar birimleri ve ayrı "SONUÇ VE ÖNERİLER" bölümü. Koyu tema yeniden düzenlendi (bölüm şeritleri,
   ayrışan başlık bantları, belirgin giriş kutuları). ☰ Menü → TEMA: Sistem / Açık / Koyu seçilebilir.
+
+M. 1.6.2 ÖNERİ DİLİ
+  Karar desteği önerileri, örnek hasta ve notun öneri bölümü konsültan diliyle yazıldı ("… önerilir", "… düşünülebilir").
+  Öneriler bölümündeki yönlendirme ve örnek metinler asistanların da bu dili kullanmasını hatırlatır.
