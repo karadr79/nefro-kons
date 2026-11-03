@@ -199,7 +199,7 @@ button.kref:hover,a.kref:hover{border-color:var(--accent)}
 @media (max-width:900px){.layout{grid-template-columns:minmax(0,1fr)} nav.rail{display:none}}
 @media (max-width:560px){.dx{grid-template-columns:24px minmax(0,1fr)} .dx>*:nth-child(n+3){grid-column:2} .sec-h,.grp,.lead{padding-left:14px;padding-right:14px} .fields{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){
-  .actions .in{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+  .actions .in{display:grid;grid-template-columns:1fr 1.1fr 1.05fr .95fr 1.3fr .85fr;gap:4px}
   .actions .prog{display:none}
   .actions button{padding:9px 2px;font-size:12.5px;width:100%}
   #clearWrap{display:contents}
@@ -431,6 +431,7 @@ nav.steps button.locked .sn{opacity:.75}
   <span id="clearWrap"><button type="button" class="ghost danger" id="btnClear"><span class="lg">Formu temizle</span><span class="sm">Temizle</span></button></span>
   <button type="button" id="btnBuild" class="pri">Not<span class="lg">u</span> oluştur</button>
   <button type="button" id="btnCopy"><span class="lg">Notu kopyala</span><span class="sm">Kopyala</span></button>
+  <button type="button" id="btnExp"><span class="lg">PDF / Excel</span><span class="sm">Aktar</span></button>
   <button type="button" id="btnWs" class="wsbtn">WhatsApp<span class="lg"> özeti</span></button>
   <button type="button" id="btnBook2" data-book="1">Kitap</button>
 </div></div>
@@ -1449,6 +1450,28 @@ refresh();
     let reloaded=false;
     navigator.serviceWorker.addEventListener('controllerchange', ()=>{ if(reloaded) return; reloaded=true; location.reload(); });
   }
+})();
+</script>
+<script src="disaktar.js"></script>
+<script>
+/* Dışa aktarma: PDF ve Excel (disaktar.js) */
+(()=>{const b=document.getElementById('btnExp');if(!window.DA){if(b)b.hidden=true;return}
+ DA.config({app:'Nefro Kons',file:'NefroKons',color:'#A9BCD3',noFab:true,kind:'Konsültasyon kaydı',directTitle:'Notu dışa aktar',
+  footer:'Konsültasyon notu taslağıdır; uzman onayı ve hastane bilgi sistemine kayıt esastır. Dosya cihazda oluşturulmuştur.'});
+ const txt=v=>Array.isArray(v)?v.join('; '):v===true?'Evet':v===false?'':String(v??'').trim();
+ b.addEventListener('click',()=>{
+  if(!$('#note').value){if(!goStep(4))return;buildNote();}
+  const note=$('#note').value;if(!note.trim()){DA.toast('Önce notu oluşturun');return}
+  const items=[{title:MODE==='iz'?'Nefroloji izlem notu':'Nefroloji konsültasyon notu',sub:C.org,text:note.split('\n'),textTitle:'Not metni',only:'pdf'}];
+  C.sections.forEach(s=>{const rows=[];
+   s.groups.forEach(gr=>gr.f.forEach(f=>{if(!f.id||['note','calc','rfsum'].includes(f.t))return;
+    let v=txt(val(f.id));
+    if(f.t==='dx'&&v){const p=txt(val(f.id+'_p')),d=txt(val(f.id+'_d'));v+=(p?' (olasılık: '+p+')':'')+(d?' · '+d:'')}
+    if(v)rows.push([(gr.g&&gr.g!==s.title?gr.g+' › ':'')+(f.l||f.id),v,f.u||''])}));
+   if(rows.length)items.push({title:s.title,inputs:rows,only:'xlsx'})});
+  items.push({title:'Not metni',text:note.split('\n'),textTitle:'Not metni',only:'xlsx'});
+  DA.open(items,txt(val('protokol')));
+ });
 })();
 </script>
 </body>
