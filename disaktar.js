@@ -354,7 +354,7 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
   /* ---------------- Rapor sepeti arayüzü ---------------- */
   var CFG = { app: 'Uygulama', color: '#46BDD0', file: 'Rapor', fab: 20 }, LIST = [], PT = '', TMP = null, UI = null;
   var CSS = '.da-btn{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 12px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:600;cursor:pointer;opacity:.9}.da-btn:hover{opacity:1}.da-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}' +
-    '.da-fab{position:fixed;right:16px;z-index:9998;display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:0;background:#0E1F2E;color:#fff;font:inherit;font-size:14px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.28);cursor:pointer}.da-fab b{background:var(--da-c);color:#0E1F2E;border-radius:999px;min-width:22px;padding:1px 7px;font-size:13px;text-align:center}.da-fab[hidden]{display:none}' +
+    '.da-fab{position:fixed;right:16px;z-index:9998;display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:0;background:#0E1F2E;color:#fff;font:inherit;font-size:14px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.28);cursor:pointer}.da-fab b{background:var(--da-c);color:#0E1F2E;border-radius:999px;min-width:22px;padding:1px 7px;font-size:13px;text-align:center}.da-fab[hidden],.da-fab b[hidden]{display:none}' +
     '.da-ov{position:fixed;inset:0;z-index:9999;background:rgba(8,16,24,.55);display:flex;align-items:flex-end;justify-content:center}.da-ov[hidden]{display:none}' +
     '.da-sh{width:min(560px,100%);max-height:88vh;overflow:auto;background:#fff;color:#1B2733;border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(0,0,0,.25);font-size:15px;line-height:1.45}@media(min-width:700px){.da-ov{align-items:center}.da-sh{border-radius:18px}}' +
     '.da-sh header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.da-sh h2{margin:0;font-size:19px;color:#14293D}.da-x{border:0;background:transparent;font-size:28px;line-height:1;color:inherit;cursor:pointer;padding:0 4px}' +
@@ -380,10 +380,10 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
     if (UI) return;
     var st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
     var w = document.createElement('div');
-    w.innerHTML = '<button type="button" class="da-fab" hidden aria-haspopup="dialog">' + ICON.replace('<svg', '<svg style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2"') + 'Rapor <b>0</b></button>' +
+    w.innerHTML = '<button type="button" class="da-fab" hidden aria-haspopup="dialog">' + ICON.replace('<svg', '<svg style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2"') + 'PDF / Excel <b>0</b></button>' +
       '<div class="da-ov" hidden><div class="da-sh" role="dialog" aria-modal="true" aria-labelledby="da-t"><header><h2 id="da-t">Hasta raporu</h2><button type="button" class="da-x" aria-label="Kapat">×</button></header>' +
       '<label class="da-lab">Hasta etiketi (isteğe bağlı)<span>Protokol numarası veya baş harfler. Ad-soyad ve T.C. kimlik numarası yazmayın.</span><input id="da-pt" maxlength="40" autocomplete="off"></label>' +
-      '<ol class="da-list"></ol><p class="da-empty">Henüz hesap eklenmedi. Hesaplayıcılardaki “Rapora ekle” düğmesini kullanın.</p>' +
+      '<ol class="da-list"></ol><p class="da-empty">Henüz hesap eklenmedi. Bir hesaplayıcıyı doldurup altındaki “Rapora ekle” düğmesine dokunun; eklenen hesaplar burada listelenir ve PDF veya Excel olarak indirilir.</p>' +
       '<div class="da-act"><button type="button" class="pri" data-f="pdf">PDF indir</button><button type="button" data-f="xlsx">Excel indir</button><button type="button" class="ghost" data-f="clr">Temizle</button></div>' +
       '<p class="da-kvkk">Dosya bu cihazda oluşturulur; hiçbir veri sunucuya gönderilmez. Rapor listesi yalnız bu oturumda tutulur, sayfa yenilenince silinir.</p></div></div>';
     document.body.appendChild(w);
@@ -404,7 +404,7 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
   function cur() { return TMP || LIST; }
   function render() {
     var L = cur();
-    UI.fab.hidden = !LIST.length || !!CFG.noFab; UI.fab.querySelector('b').textContent = LIST.length;
+    UI.fab.hidden = !!CFG.noFab; UI.fab.querySelector('b').textContent = LIST.length; UI.fab.querySelector('b').hidden = !LIST.length;
     var shown = TMP ? L.filter(function (it) { return it.only !== 'xlsx'; }) : L, extra = TMP ? L.length - shown.length - 1 : 0;
     UI.list.innerHTML = shown.map(function (it, i) {
       var parts = [];
@@ -447,7 +447,7 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
   }
 
   root.DA = {
-    config: function (c) { for (var k in c) CFG[k] = c[k]; if (UI) document.documentElement.style.setProperty('--da-c', CFG.color); },
+    config: function (c) { for (var k in c) CFG[k] = c[k]; if (UI) document.documentElement.style.setProperty('--da-c', CFG.color); var go = function () { mount(); render(); }; if (document.body) go(); else document.addEventListener('DOMContentLoaded', go); },
     add: add, open: open, button: button, btnHTML: function (l) { return '<button type="button" class="da-btn">' + ICON + (l || 'Rapora ekle') + '</button>'; }, toast: function (t) { mount(); toast(t); }, inputs: inputsOf, outputs: outputsOf, clean: clean,
     pdf: function (items, label) { return buildPdf(CFG, items, label || '', new Date()); },
     xlsx: function (items, label) { return xlsxFor(CFG, items, label || '', new Date()); },
