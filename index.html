@@ -153,6 +153,9 @@ button.danger{color:var(--red)}
 .confirm{display:inline-flex;gap:6px;align-items:center;font-size:13px}
 .out.ws{border-color:var(--green)} .out.ws h2{color:var(--green)}
 button.wsbtn{background:var(--green-soft);border-color:var(--green-line);color:var(--green)}
+.expbtn{background:var(--blue-soft);border-color:var(--blue);color:var(--blue);font-weight:700}
+.expbig{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--blue);background:var(--blue-soft);color:var(--blue);font:inherit;font-size:15.5px;font-weight:700;cursor:pointer}
+.expbig svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
 .actions .sm{display:none}
 .grp.mod{border-left:4px solid var(--blue);background:color-mix(in srgb,var(--blue-soft) 45%,transparent)}
 .grp.mod h3{color:var(--blue);font-size:14px}
@@ -383,7 +386,7 @@ nav.steps button.locked .sn{opacity:.75}
   <header class="top">
     <div class="org" id="org"></div>
     <h1 id="ttl"></h1>
-    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.7.2</span></div>
+    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.7.3</span></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="kref" id="btnBook" style="font-size:13.5px;padding:6px 12px">El kitabını aç</button><a class="kref" id="btnCalc" href="https://karadr79.github.io/NefroHesapAraclar/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Hesap araçları ↗</a><a class="kref" id="btnNut" href="https://karadr79.github.io/KlinikBeslenme/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Klinik beslenme ↗</a><a class="kref" id="btnKbh" href="https://karadr79.github.io/KBHRehberi/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">KBH rehberi ↗</a></div>
     <div class="install" id="installHint" hidden>
   <span id="installText"></span>
@@ -409,6 +412,7 @@ nav.steps button.locked .sn{opacity:.75}
         <label class="ck" style="margin-bottom:8px;padding:8px 10px"><input type="checkbox" id="noteDetail"><span><span class="t" style="font-size:14px">Ayrıntılı not (tüm dolu alanlar)</span><span class="sub"><span class="hint">Varsayılan kısa not yalnızca karar için gerekli bilgileri içerir.</span></span></span></label>
         <div id="missing"></div>
         <textarea id="note" readonly aria-label="Konsültasyon notu" placeholder="Formu doldurduktan sonra alttaki 'Notu oluştur' düğmesine basın."></textarea>
+        <button type="button" id="btnExp2" class="expbig"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 15l3 3 3-3"/></svg>Notu PDF veya Excel olarak indir</button>
       </div>
       <div class="out ws" id="wsout" data-xstep="4">
         <h2>WhatsApp özeti (uzmana)</h2>
@@ -431,7 +435,7 @@ nav.steps button.locked .sn{opacity:.75}
   <span id="clearWrap"><button type="button" class="ghost danger" id="btnClear"><span class="lg">Formu temizle</span><span class="sm">Temizle</span></button></span>
   <button type="button" id="btnBuild" class="pri">Not<span class="lg">u</span> oluştur</button>
   <button type="button" id="btnCopy"><span class="lg">Notu kopyala</span><span class="sm">Kopyala</span></button>
-  <button type="button" id="btnExp"><span class="lg">PDF / Excel</span><span class="sm">Aktar</span></button>
+  <button type="button" id="btnExp" class="expbtn"><span class="lg">PDF / Excel</span><span class="sm">PDF / Excel</span></button>
   <button type="button" id="btnWs" class="wsbtn">WhatsApp<span class="lg"> özeti</span></button>
   <button type="button" id="btnBook2" data-book="1">Kitap</button>
 </div></div>
@@ -1455,11 +1459,11 @@ refresh();
 <script src="disaktar.js"></script>
 <script>
 /* Dışa aktarma: PDF ve Excel (disaktar.js) */
-(()=>{const b=document.getElementById('btnExp');if(!window.DA){if(b)b.hidden=true;return}
+(()=>{const b=document.getElementById('btnExp'),b2=document.getElementById('btnExp2');if(!window.DA){if(b)b.hidden=true;if(b2)b2.hidden=true;return}
  DA.config({app:'Nefro Kons',file:'NefroKons',color:'#A9BCD3',noFab:true,kind:'Konsültasyon kaydı',directTitle:'Notu dışa aktar',
   footer:'Konsültasyon notu taslağıdır; uzman onayı ve hastane bilgi sistemine kayıt esastır. Dosya cihazda oluşturulmuştur.'});
  const txt=v=>Array.isArray(v)?v.join('; '):v===true?'Evet':v===false?'':String(v??'').trim();
- b.addEventListener('click',()=>{
+ const go=()=>{
   if(!$('#note').value){if(!goStep(4))return;buildNote();}
   const note=$('#note').value;if(!note.trim()){DA.toast('Önce notu oluşturun');return}
   const items=[{title:MODE==='iz'?'Nefroloji izlem notu':'Nefroloji konsültasyon notu',sub:C.org,text:note.split('\n'),textTitle:'Not metni',only:'pdf'}];
@@ -1471,7 +1475,8 @@ refresh();
    if(rows.length)items.push({title:s.title,inputs:rows,only:'xlsx'})});
   items.push({title:'Not metni',text:note.split('\n'),textTitle:'Not metni',only:'xlsx'});
   DA.open(items,txt(val('protokol')));
- });
+ };
+ b.addEventListener('click',go);if(b2)b2.addEventListener('click',go);
 })();
 </script>
 </body>
