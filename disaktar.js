@@ -353,16 +353,18 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
 
   /* ---------------- Rapor sepeti arayüzü ---------------- */
   var CFG = { app: 'Uygulama', color: '#46BDD0', file: 'Rapor', fab: 20 }, LIST = [], PT = '', TMP = null, UI = null;
-  var CSS = '.da-btn{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 12px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:600;cursor:pointer;opacity:.9}.da-btn:hover{opacity:1}.da-btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2}' +
-    '.da-fab{position:fixed;right:16px;z-index:9998;display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:0;background:#0E1F2E;color:#fff;font:inherit;font-size:14px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.28);cursor:pointer}.da-fab b{background:var(--da-c);color:#0E1F2E;border-radius:999px;min-width:22px;padding:1px 7px;font-size:13px;text-align:center}.da-fab[hidden],.da-fab b[hidden]{display:none}' +
-    '.da-ov{position:fixed;inset:0;z-index:9999;background:rgba(8,16,24,.55);display:flex;align-items:flex-end;justify-content:center}.da-ov[hidden]{display:none}' +
+  var CSS = '.da-btn,.da-btn:hover,.da-btn:focus{all:unset;box-sizing:border-box;display:inline-flex!important;align-items:center;gap:7px;width:auto!important;max-width:max-content!important;justify-self:start!important;align-self:flex-start!important;margin:12px 0 0;padding:7px 14px 7px 9px;border-radius:999px;border:0;background:var(--da-c);color:#0E1F2E;font-family:inherit;font-size:13.5px;font-weight:700;line-height:1.3;cursor:pointer;box-shadow:0 2px 6px color-mix(in srgb,var(--da-c) 45%,transparent);min-height:0;-webkit-appearance:none;appearance:none}.da-btn:hover{filter:brightness(1.06)}.da-btn:active{transform:translateY(1px)}.da-btn:focus-visible{outline:2px solid #14293D;outline-offset:2px}.da-btn svg{width:18px;height:18px;flex:none;border-radius:50%;background:#0E1F2E;fill:none;stroke:var(--da-c);stroke-width:2.6;padding:3px;box-sizing:border-box}' +
+    '.da-fab{all:unset;box-sizing:border-box;position:fixed;right:14px;z-index:9998;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:1px solid #CBD6DF;background:#fff;color:#14293D;font-family:inherit;font-size:13px;font-weight:700;line-height:1.2;box-shadow:0 3px 12px rgba(14,31,46,.16);cursor:pointer;-webkit-appearance:none}.da-fab svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;flex:none}.da-fab b{background:var(--da-c);color:#0E1F2E;border-radius:999px;min-width:18px;padding:0 6px;font-size:12px;text-align:center}.da-fab[hidden],.da-fab b[hidden]{display:none}' +
+    '.da-fab.da-dk{background:#15202B;color:#E6EDF3;border-color:#3A4B5A;box-shadow:0 3px 12px rgba(0,0,0,.4)}' +
+'.da-ov{position:fixed;inset:0;z-index:9999;background:rgba(8,16,24,.55);display:flex;align-items:flex-end;justify-content:center}.da-ov[hidden]{display:none}' +
     '.da-sh{width:min(560px,100%);max-height:88vh;overflow:auto;background:#fff;color:#1B2733;border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(0,0,0,.25);font-size:15px;line-height:1.45}@media(min-width:700px){.da-ov{align-items:center}.da-sh{border-radius:18px}}' +
     '.da-sh header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.da-sh h2{margin:0;font-size:19px;color:#14293D}.da-x{border:0;background:transparent;font-size:28px;line-height:1;color:inherit;cursor:pointer;padding:0 4px}' +
     '.da-lab{display:block;font-weight:700;font-size:14px;margin-bottom:12px}.da-lab span{display:block;font-weight:400;font-size:12.5px;color:#4D5F6A}.da-lab input{display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:10px 12px;border:1px solid #B8C6D1;border-radius:10px;font:inherit;background:#fff;color:inherit}' +
     '.da-list{list-style:none;margin:0 0 12px;padding:0;border-top:1px solid #DCE4EA}.da-list li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #DCE4EA}.da-list li div{flex:1;min-width:0}.da-list b{display:block;font-size:14.5px}.da-list small{color:#4D5F6A;font-size:12.5px}.da-list button{border:1px solid #B8C6D1;background:transparent;color:inherit;border-radius:8px;padding:5px 9px;font:inherit;font-size:12.5px;cursor:pointer}' +
     '.da-empty{color:#4D5F6A;font-size:14px}.da-act{display:flex;flex-wrap:wrap;gap:8px}.da-act button{flex:1 1 auto;padding:11px 14px;border-radius:10px;border:1px solid #14293D;background:#fff;color:#14293D;font:inherit;font-weight:700;font-size:14.5px;cursor:pointer}.da-act .pri{background:#14293D;color:#fff}.da-act .ghost{border-color:#B8C6D1;color:#4D5F6A;flex:0 1 auto}.da-act button:disabled{opacity:.45;cursor:default}' +
-    '.da-kvkk{margin:12px 0 0;font-size:12.5px;color:#4D5F6A}.da-toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(14px + env(safe-area-inset-top));z-index:10000;max-width:90vw;text-align:center;background:#0E1F2E;color:#fff;padding:9px 16px;border-radius:999px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.25)}.da-toast[hidden]{display:none}' +
+    '.da-kvkk{margin:12px 0 0;font-size:12.5px;color:#4D5F6A}.da-toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(12px + env(safe-area-inset-top));z-index:10000;max-width:90vw;text-align:center;background:#fff;color:#14293D;border:1px solid #CBD6DF;border-left:4px solid var(--da-c);padding:7px 13px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 3px 12px rgba(14,31,46,.16)}.da-toast.da-dk{background:#15202B;color:#E6EDF3;border-color:#3A4B5A;border-left-color:var(--da-c)}.da-toast[hidden]{display:none}' +
     '.da-dark .da-sh{background:#15202B;color:#E6EDF3}.da-dark .da-sh h2{color:#E6EDF3}.da-dark .da-lab span,.da-dark .da-list small,.da-dark .da-empty,.da-dark .da-kvkk{color:#A9B7C3}.da-dark .da-lab input{background:#0F1821;border-color:#3A4B5A}.da-dark .da-list,.da-dark .da-list li{border-color:#2C3B48}.da-dark .da-list button{border-color:#3A4B5A}.da-dark .da-act button{background:transparent;color:#E6EDF3;border-color:#7FA6C8}.da-dark .da-act .pri{background:#7FB0E0;color:#0E1F2E;border-color:#7FB0E0}.da-dark .da-act .ghost{border-color:#3A4B5A;color:#A9B7C3}';
+  var PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>';
   var ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14h6"/></svg>';
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function isDark() {
@@ -374,16 +376,16 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
   function toast(t) {
     var d = document.querySelector('.da-toast');
     if (!d) { d = document.createElement('div'); d.className = 'da-toast'; d.setAttribute('role', 'status'); document.body.appendChild(d); }
-    d.textContent = t; d.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { d.hidden = true; }, 2400);
+    d.textContent = t; d.hidden = false; d.classList.toggle('da-dk', isDark()); clearTimeout(toast.t); toast.t = setTimeout(function () { d.hidden = true; }, 2400);
   }
   function mount() {
     if (UI) return;
     var st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
     var w = document.createElement('div');
-    w.innerHTML = '<button type="button" class="da-fab" hidden aria-haspopup="dialog">' + ICON.replace('<svg', '<svg style="width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2"') + 'PDF / Excel <b>0</b></button>' +
+    w.innerHTML = '<button type="button" class="da-fab" hidden aria-haspopup="dialog">' + ICON + 'PDF / Excel <b>0</b></button>' +
       '<div class="da-ov" hidden><div class="da-sh" role="dialog" aria-modal="true" aria-labelledby="da-t"><header><h2 id="da-t">Hasta raporu</h2><button type="button" class="da-x" aria-label="Kapat">×</button></header>' +
       '<label class="da-lab">Hasta etiketi (isteğe bağlı)<span>Protokol numarası veya baş harfler. Ad-soyad ve T.C. kimlik numarası yazmayın.</span><input id="da-pt" maxlength="40" autocomplete="off"></label>' +
-      '<ol class="da-list"></ol><p class="da-empty">Henüz hesap eklenmedi. Bir hesaplayıcıyı doldurup altındaki “Rapora ekle” düğmesine dokunun; eklenen hesaplar burada listelenir ve PDF veya Excel olarak indirilir.</p>' +
+      '<ol class="da-list"></ol><p class="da-empty">Henüz hesap eklenmedi. Bir hesaplayıcıyı doldurup altındaki “PDF/Excel raporuna ekle” düğmesine dokunun; eklenen hesaplar burada listelenir ve PDF veya Excel olarak indirilir.</p>' +
       '<div class="da-act"><button type="button" class="pri" data-f="pdf">PDF indir</button><button type="button" data-f="xlsx">Excel indir</button><button type="button" class="ghost" data-f="clr">Temizle</button></div>' +
       '<p class="da-kvkk">Dosya bu cihazda oluşturulur; hiçbir veri sunucuya gönderilmez. Rapor listesi yalnız bu oturumda tutulur, sayfa yenilenince silinir.</p></div></div>';
     document.body.appendChild(w);
@@ -391,6 +393,8 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
     document.documentElement.style.setProperty('--da-c', CFG.color);
     UI.fab.style.bottom = 'calc(' + CFG.fab + 'px + env(safe-area-inset-bottom))';
     UI.fab.addEventListener('click', function () { open(); });
+    var syncDk = function () { UI.fab.classList.toggle('da-dk', isDark()); };
+    try { var mo = new MutationObserver(function () { setTimeout(syncDk, 50); }); mo.observe(document.documentElement, { attributes: true }); mo.observe(document.body, { attributes: true }); matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { setTimeout(syncDk, 50); }); } catch (e) { }
     UI.ov.addEventListener('click', function (e) { if (e.target === UI.ov || e.target.closest('.da-x')) close(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !UI.ov.hidden) close(); });
     UI.pt.addEventListener('input', function () { PT = UI.pt.value; });
@@ -404,7 +408,7 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
   function cur() { return TMP || LIST; }
   function render() {
     var L = cur();
-    UI.fab.hidden = !!CFG.noFab; UI.fab.querySelector('b').textContent = LIST.length; UI.fab.querySelector('b').hidden = !LIST.length;
+    UI.fab.hidden = !!CFG.noFab; UI.fab.classList.toggle('da-dk', isDark()); UI.fab.querySelector('b').textContent = LIST.length; UI.fab.querySelector('b').hidden = !LIST.length;
     var shown = TMP ? L.filter(function (it) { return it.only !== 'xlsx'; }) : L, extra = TMP ? L.length - shown.length - 1 : 0;
     UI.list.innerHTML = shown.map(function (it, i) {
       var parts = [];
@@ -443,12 +447,12 @@ var FONTS={r:{b:"AAEAAAAPAIAAAwBwR0RFRgTGBPMAAGTkAAAATEdQT1NEdkx1AABlMAAAACBHU1V
     render(); toast(i >= 0 ? 'Rapordaki kayıt güncellendi' : 'Rapora eklendi (' + LIST.length + ')');
   }
   function button(label) {
-    var b = document.createElement('button'); b.type = 'button'; b.className = 'da-btn'; b.innerHTML = ICON + (label || 'Rapora ekle'); return b;
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'da-btn'; b.innerHTML = PLUS + (label || 'PDF/Excel raporuna ekle'); return b;
   }
 
   root.DA = {
     config: function (c) { for (var k in c) CFG[k] = c[k]; if (UI) document.documentElement.style.setProperty('--da-c', CFG.color); var go = function () { mount(); render(); }; if (document.body) go(); else document.addEventListener('DOMContentLoaded', go); },
-    add: add, open: open, button: button, btnHTML: function (l) { return '<button type="button" class="da-btn">' + ICON + (l || 'Rapora ekle') + '</button>'; }, toast: function (t) { mount(); toast(t); }, inputs: inputsOf, outputs: outputsOf, clean: clean,
+    add: add, open: open, button: button, btnHTML: function (l) { return '<button type="button" class="da-btn">' + PLUS + (l || 'PDF/Excel raporuna ekle') + '</button>'; }, toast: function (t) { mount(); toast(t); }, inputs: inputsOf, outputs: outputsOf, clean: clean,
     pdf: function (items, label) { return buildPdf(CFG, items, label || '', new Date()); },
     xlsx: function (items, label) { return xlsxFor(CFG, items, label || '', new Date()); },
     _test: { wrap: wrap, width: width, runs: runs }
