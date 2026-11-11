@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="author" content="Prof. Dr. Ekrem KARA">
 <meta name="theme-color" content="#0E1F2E">
 <meta name="description" content="RTEÜ Nefroloji konsültasyon formu: kırmızı bayrak taraması, hesaplayıcılar, HBYS notu ve WhatsApp özeti.">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -23,6 +24,8 @@ body{margin:0} img{max-width:100%} [hidden]{display:none!important}
 </style>
 <title>Nefroloji Konsültasyon Formu</title>
 <link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="ortak.css">
+<script src="ortak.js"></script>
 <style>
 /* Layout: clinical chart sheet — left section rail (wide screens), single form column, sticky action bar; red/blue/green bands mark triage, assessment, plan */
 :root{
@@ -396,7 +399,8 @@ nav.steps{background:color-mix(in srgb,var(--hk-base) 80%,transparent)!important
   <header class="top">
     <div class="org" id="org"></div>
     <h1 id="ttl"></h1>
-    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.7.4</span></div>
+    <div class="ver"><span id="ver"></span> · <span class="appver">uygulama 1.8.0 · 11.11.2026</span></div>
+  <div id="rtHost" style="margin:8px 0 4px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="kref" id="btnBook" style="font-size:13.5px;padding:6px 12px">El kitabını aç</button><a class="kref" id="btnCalc" href="https://karadr79.github.io/NefroHesapAraclar/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Hesap araçları ↗</a><a class="kref" id="btnNut" href="https://karadr79.github.io/KlinikBeslenme/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Klinik beslenme ↗</a><a class="kref" id="btnKbh" href="https://karadr79.github.io/KBHRehberi/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">KBH rehberi ↗</a><a class="kref" id="btnNakil" href="https://karadr79.github.io/NakilRehberi/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Nakil rehberi ↗</a><a class="kref" id="btnSemi" href="https://karadr79.github.io/SemiyolojiRehberi/" target="_blank" rel="noopener" style="font-size:13.5px;padding:6px 12px;text-decoration:none;display:inline-block">Semiyoloji rehberi ↗</a></div>
     <div class="install" id="installHint" hidden>
   <span id="installText"></span>
@@ -1491,5 +1495,8 @@ refresh();
 </script>
 <!--hareket--><script src="hareket.js"></script>
 <script>Hareket.init({reveal:['section.sec','[data-xstep]'],collapse:'.sec'});</script>
+<script>
+(function(){if(!window.RTEU)return;const boot=()=>{RTEU.init({key:"nk",tools:"#rtHost",view:"main",deep:false,zoom:"main",enter:false,reset:false,press:".kref,.chips label,.modesel button",cards:"section.sec",tables:".rt-none",outs:".calc .out",outVal:"b,strong"});RTEU.enhance(document)};if(document.readyState==="complete")setTimeout(boot,150);else window.addEventListener("load",()=>setTimeout(boot,150))})();
+</script>
 </body>
 </html>
