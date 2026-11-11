@@ -83,3 +83,16 @@ html.rt-rem body{font-size:calc(15.5px*var(--rt-fs,1))}
 .rt-tools.rt-light{color:var(--ink,#223)}
 .rt-foot{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;margin:28px 0 8px;padding:14px 0 0;border-top:1px solid var(--line,#ccd)}
 .rt-qh{font-size:1.15em;margin:22px 0 8px}.rt-qh3{font-size:.95em;margin:14px 0 6px;opacity:.8}.rt-quick{margin:0 0 18px}
+
+/* akış şeması kutuları */
+.rt-flowd{margin:14px 0 4px;border:1px solid var(--line,#ccd);border-radius:10px;padding:0 12px;background:var(--surface,transparent)}
+.rt-flowd>summary{cursor:pointer;font-weight:700;font-size:.92rem;padding:10px 0;list-style:none}
+.rt-flowd>summary::-webkit-details-marker{display:none}
+.rt-flowd>summary::before{content:"▸ ";color:var(--accent,#46a)}
+.rt-flowd[open]>summary::before{content:"▾ "}
+.rt-flowd[open]{padding-bottom:12px}
+.rt-flowbox{margin:16px 0}
+.rt-flowbox h4{margin:0 0 8px;font-size:.95rem}
+.flowcap{font-size:.8rem;opacity:.75;margin:6px 0 0}
+
+.rt-logo{border-radius:22%;flex:none;display:block;box-shadow:0 2px 7px rgba(0,0,0,.28)}

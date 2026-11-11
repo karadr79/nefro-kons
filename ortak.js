@@ -32,8 +32,8 @@
    /* sayfa girişi */
    if(R.cfg.enter!==false){view.classList.remove("rt-in");void view.offsetWidth;view.classList.add("rt-in")}
    /* akış şeması: görünür olunca sırayla */
-   const io=("IntersectionObserver" in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove("rt-wait");e.target.classList.add("rt-go");io.unobserve(e.target)}}),{threshold:.12}):null;
-   view.querySelectorAll(".flow").forEach(f=>{[...f.children].forEach((c,i)=>c.style.setProperty("--i",i));if(io){f.classList.add("rt-wait");io.observe(f)}});
+   const io=("IntersectionObserver" in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.remove("rt-wait");e.target.classList.add("rt-go");io.unobserve(e.target)}}),{threshold:.01}):null;
+   view.querySelectorAll(".flow").forEach(f=>{[...f.children].forEach((c,i)=>c.style.setProperty("--i",i));if(io){f.classList.add("rt-wait");io.observe(f);setTimeout(()=>{if(f.classList.contains("rt-wait")&&f.offsetParent){f.classList.remove("rt-wait");f.classList.add("rt-go")}},1800)}});
    /* hesap sonucu değişince sayı canlanır */
    view.querySelectorAll(R.cfg.outs||".calc .out").forEach(o=>{if(o.dataset.rtm)return;o.dataset.rtm=1;let last="";new MutationObserver(()=>{const v=o.querySelector(R.cfg.outVal||".big .v, .msg .pill")||o;const t=v?v.textContent:"";if(v&&t!==last){last=t;v.classList.add("rt-pop")}}).observe(o,{childList:true})});
   },
